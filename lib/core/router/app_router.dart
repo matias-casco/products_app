@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:products_app/products/presentation/pages/product_details.dart';
+
+import 'package:products_app/products/presentation/pages/product_details_page.dart';
 import 'package:products_app/products/presentation/pages/products_page.dart';
 
 final appRouter = GoRouter(initialLocation: ProductsPage.path, routes: [

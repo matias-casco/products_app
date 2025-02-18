@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:products_app/products/domain/entities/product_details.dart';
 
 class ProductDetailsExtra {
@@ -18,7 +19,7 @@ class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Product Details')),
+      appBar: AppBar(title: const Text('Product Details')),
       body: Column(
         children: [
           Image.network(
