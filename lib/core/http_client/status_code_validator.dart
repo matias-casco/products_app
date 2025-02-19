@@ -3,7 +3,9 @@ import 'package:products_app/core/http_client/exceptions/exceptions.dart';
 
 class StatusCodeValidator {
 
-  static void validate(Response response) {
+  const StatusCodeValidator();
+
+  void validate(Response response) {
     if ((response.statusCode ?? 400) < 400) {
       return;
     }

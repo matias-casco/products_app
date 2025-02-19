@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 
 import 'package:products_app/core/http_client/http_client_interface.dart';
-import 'package:products_app/core/http_client/isolate_parser.dart';
 import 'package:products_app/core/http_client/status_code_validator.dart';
 
 class DioHttpClientImpl extends HttpClientInterface {
   DioHttpClientImpl();
+
+  static const StatusCodeValidator validator = StatusCodeValidator();
 
   Future<Dio> get dio async {
     final dio = await _createDio();
@@ -34,7 +35,6 @@ class DioHttpClientImpl extends HttpClientInterface {
     required ResponseConverter<T> converter,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
-    bool isIsolate = true,
   }) async {
     final myDio = await dio;
 
@@ -46,17 +46,9 @@ class DioHttpClientImpl extends HttpClientInterface {
       ),
     );
 
-    StatusCodeValidator.validate(response);
+    validator.validate(response);
 
-    if (!isIsolate) {
-      return converter(response.data);
-    }
-    final isolateParse = IsolateParser<T>(
-      response.data as Map<String, dynamic>,
-      converter,
-    );
-    final result = await isolateParse.parseInBackground();
-    return result;
+    return converter(response.data);
   }
 
   @override
@@ -75,17 +67,9 @@ class DioHttpClientImpl extends HttpClientInterface {
       options: Options(headers: headers),
     );
 
-    StatusCodeValidator.validate(response);
+    validator.validate(response);
 
-    if (!isIsolate) {
-      return converter(response.data);
-    }
-    final isolateParse = IsolateParser<T>(
-      response.data as Map<String, dynamic>,
-      converter,
-    );
-    final result = await isolateParse.parseInBackground();
-    return result;
+    return converter(response.data);
   }
 
   @override
@@ -93,24 +77,15 @@ class DioHttpClientImpl extends HttpClientInterface {
     String url, {
     required ResponseConverter<T> converter,
     Map<String, dynamic>? headers,
-    bool isIsolate = true,
   }) async {
     final myDio = await dio;
     final response = await myDio.delete(
       url,
       options: Options(headers: headers),
     );
-    StatusCodeValidator.validate(response);
+    validator.validate(response);
 
-    if (!isIsolate) {
-      return converter(response.data);
-    }
-    final isolateParse = IsolateParser<T>(
-      response.data as Map<String, dynamic>,
-      converter,
-    );
-    final result = await isolateParse.parseInBackground();
-    return result;
+    return converter(response.data);
   }
 
   @override
@@ -119,7 +94,6 @@ class DioHttpClientImpl extends HttpClientInterface {
     required ResponseConverter<T> converter,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
-    bool isIsolate = true,
   }) async {
     final myDio = await dio;
     final response = await myDio.put(
@@ -127,16 +101,8 @@ class DioHttpClientImpl extends HttpClientInterface {
       data: data,
       options: Options(headers: headers),
     );
-    StatusCodeValidator.validate(response);
+    validator.validate(response);
 
-    if (!isIsolate) {
-      return converter(response.data);
-    }
-    final isolateParse = IsolateParser<T>(
-      response.data as Map<String, dynamic>,
-      converter,
-    );
-    final result = await isolateParse.parseInBackground();
-    return result;
+    return converter(response.data);
   }
 }

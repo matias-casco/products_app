@@ -7,7 +7,6 @@ abstract class HttpClientInterface {
     required ResponseConverter<T> converter,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
-    bool isIsolate = true,
   });
 
   Future<T> postRequest<T>(
@@ -15,7 +14,6 @@ abstract class HttpClientInterface {
     required ResponseConverter<T> converter,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
-    bool isIsolate = true,
   });
   
   Future<T> putRequest<T>(
@@ -23,11 +21,9 @@ abstract class HttpClientInterface {
     required ResponseConverter<T> converter,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
-    bool isIsolate = true,
   });
   Future<T> deleteRequest<T>(
     String url, {
     required ResponseConverter<T> converter,
-    bool isIsolate = true,
   });
 }

@@ -5,10 +5,10 @@ import 'package:products_app/products/data/datasources/products_datasource.dart'
 import 'package:products_app/products/domain/entities/products.dart';
 import 'package:products_app/products/domain/repositories/products_repository.dart';
 
-class DummyProductsRepositoryImpl extends ProductsRepository {
+class ProductsRepositoryImpl extends ProductsRepository {
   final ProductsDatasource _productsDatasource;
 
-  DummyProductsRepositoryImpl({required ProductsDatasource productsDatasource})
+  ProductsRepositoryImpl({required ProductsDatasource productsDatasource})
       : _productsDatasource = productsDatasource;
 
   @override
