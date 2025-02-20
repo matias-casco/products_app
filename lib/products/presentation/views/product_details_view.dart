@@ -21,6 +21,7 @@ class ProductDetailsView extends StatelessWidget {
         SliverAppBar(
           expandedHeight: 300,
           pinned: true,
+          centerTitle: true,
           title: Text(product.title),
           flexibleSpace: _ProductFlexibleSpaceBar(product: product),
         ),

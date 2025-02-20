@@ -100,7 +100,7 @@ class _ProductsBuilder extends StatelessWidget {
               return ProductCard(
                   product: product,
                   onTap: () {
-                    context.go(
+                    context.push(
                       ProductDetailsPage.path,
                       extra: ProductDetailsExtra(details: product),
                     );

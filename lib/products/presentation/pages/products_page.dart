@@ -23,6 +23,7 @@ class _ProductsPageAppBar extends StatelessWidget implements PreferredSizeWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
