@@ -121,7 +121,7 @@ void main() {
 
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(createTestWidget());
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(seconds: 1));
       });
 
       expect(
@@ -142,11 +142,13 @@ void main() {
 
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(createTestWidget());
-        await tester.pumpAndSettle();
-      });
+        await tester.pump(const Duration(seconds: 1));
 
-      await tester.tap(find.text(mockProducts.productsDetails.first.title));
-      await tester.pumpAndSettle();
+        await tester.tap(find.text(mockProducts.productsDetails.first.title));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pump(const Duration(milliseconds: 500)); 
+      });
 
       expect(find.byType(ProductDetailsPage), findsOneWidget);
     });
