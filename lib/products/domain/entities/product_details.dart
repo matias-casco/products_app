@@ -24,36 +24,36 @@ class ProductDetails extends Equatable {
     required this.reviews,
     required this.returnPolicy,
     required this.minimumOrderQuantity,
-    required this.meta, 
+    required this.meta,
     required this.images,
     required this.thumbnail,
-    });
+  });
 
   final int id;
-    final String title;
-    final String description;
-    final String category;
-    final double price;
-    final double discountPercentage;
-    final double rating;
-    final int stock;
-    final List<String> tags;
-    final String? brand;
-    final String sku;
-    final int weight;
-    final Dimensions dimensions;
-    final String warrantyInformation;
-    final String shippingInformation;
-    final String availabilityStatus;
-    final List<Review> reviews;
-    final String? returnPolicy;
-    final int minimumOrderQuantity;
-    final MetaDataEntity meta;
-    final List<String> images;
-    final String thumbnail;
-    
-      @override
-      List<Object?> get props => [
+  final String title;
+  final String description;
+  final String category;
+  final double price;
+  final double discountPercentage;
+  final double rating;
+  final int stock;
+  final List<String> tags;
+  final String? brand;
+  final String sku;
+  final int weight;
+  final Dimensions dimensions;
+  final String warrantyInformation;
+  final String shippingInformation;
+  final String availabilityStatus;
+  final List<Review> reviews;
+  final String? returnPolicy;
+  final int minimumOrderQuantity;
+  final MetaDataEntity meta;
+  final List<String> images;
+  final String thumbnail;
+
+  @override
+  List<Object?> get props => [
         id,
         title,
         description,
@@ -78,4 +78,6 @@ class ProductDetails extends Equatable {
         thumbnail,
       ];
 
+  String get dimensionsText =>
+      'Dimensions: ${dimensions.depth} x ${dimensions.width} x ${dimensions.height}';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:products_app/products/domain/entities/product_details.dart';
+import 'package:products_app/products/presentation/views/product_details_view.dart';
 
 class ProductDetailsExtra {
   const ProductDetailsExtra({required this.details});
@@ -18,24 +19,10 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Product Details')),
-      body: Column(
-        children: [
-          Image.network(
-            extra.details.thumbnail,
-            width: double.infinity,
-            height: 180,
-            fit: BoxFit.scaleDown,
-          ),
-          Text('Product Name: ${extra.details.title}'),
-          Text('Product Price: ${extra.details.price}'),
-          Text('Product Category: ${extra.details.category}'),
-          Text('Product Rating: ${extra.details.rating}'),
-          Text('Product Description: ${extra.details.description}'),
-          
-        ],
-      ),
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+      body: ProductDetailsView(product: extra.details),
     );
   }
 }

@@ -6,12 +6,13 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
-import 'package:products_app/core/router/app_router.dart';
+import 'package:products_app/main.dart';
 import 'package:products_app/products/data/models/products_model.dart';
 import 'package:products_app/products/presentation/notifiers/products_page_notifier.dart';
 import 'package:products_app/products/presentation/pages/product_details_page.dart';
 
 import '../../data/products_json_mock.dart';
+
 import 'products_page_test.mocks.dart';
 
 @GenerateNiceMocks([
@@ -53,9 +54,7 @@ void main() {
   });
 
   Widget createTestWidget() {
-    return MaterialApp.router(
-      routerConfig: appRouter,
-    );
+    return const MyApp();
   }
 
   group('ProductPage', () {
