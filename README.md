@@ -84,7 +84,7 @@ Ensure you have the following installed on your system:
 
 1️⃣ **Clone the repository**  
 ```bash
-git clone https://github.com/your-repo/products_app.git
+git clone https://github.com/matias-casco/products_app.git
 cd products_app
 ```
 
