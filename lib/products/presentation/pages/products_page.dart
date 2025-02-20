@@ -24,7 +24,7 @@ class ProductsPage extends StatelessWidget {
               bottom: 12,
             ),
             child: const Text(
-              'Buy Best',
+              'Buy Today',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
@@ -53,12 +53,18 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  final _productsNotifier = ProductsPageNotifier(getProductsUseCase: sl());
+  final _productsNotifier = sl<ProductsPageNotifier>();
 
   @override
   void dispose() {
     _productsNotifier.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    _productsNotifier.getProducts();
+    super.initState();
   }
 
   @override
@@ -112,9 +118,8 @@ class _BodyState extends State<_Body> {
                     ),
                   );
                 }
-
                 if (state.status == ProductsPageStatus.loading ||
-                    state.status == null) {
+                    state.products == null) {
                   return const Column(
                     children: [
                       SizedBox(

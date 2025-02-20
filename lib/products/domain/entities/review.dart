@@ -7,7 +7,7 @@ class Review extends Equatable {
   final String reviewerName;
   final String reviewerEmail;
 
-  Review({
+  const Review({
     required this.rating,
     required this.comment,
     required this.date,

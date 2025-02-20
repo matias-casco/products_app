@@ -1,6 +1,5 @@
-class ProductsModelMock {
-  get jsonMock {
-    return {
+dynamic productsJsonMock  = 
+     {
       "products": [
         {
           "id": 1,
@@ -117,5 +116,3 @@ class ProductsModelMock {
       "skip": 0,
       "limit": 30
     };
-  }
-}

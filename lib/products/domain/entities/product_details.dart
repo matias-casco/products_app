@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:products_app/products/domain/entities/dimensions.dart';
-import 'package:products_app/products/domain/entities/meta_data.dart';
+import 'package:products_app/products/domain/entities/meta_data_entity.dart';
 import 'package:products_app/products/domain/entities/review.dart';
 
 class ProductDetails extends Equatable {
@@ -48,7 +48,7 @@ class ProductDetails extends Equatable {
     final List<Review> reviews;
     final String? returnPolicy;
     final int minimumOrderQuantity;
-    final MetaData meta;
+    final MetaDataEntity meta;
     final List<String> images;
     final String thumbnail;
     

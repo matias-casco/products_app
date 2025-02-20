@@ -1,4 +1,4 @@
-import 'package:products_app/products/domain/entities/meta_data.dart';
+import 'package:products_app/products/domain/entities/meta_data_entity.dart';
 
 class MetaModel {
   final DateTime createdAt;
@@ -27,7 +27,7 @@ class MetaModel {
         "qrCode": qrCode,
       };
 
-  MetaData toEntity() => MetaData(
+  MetaDataEntity toEntity() => MetaDataEntity(
         createdAt: createdAt,
         updatedAt: updatedAt,
         barcode: barcode,

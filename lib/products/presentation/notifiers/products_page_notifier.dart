@@ -1,10 +1,10 @@
-import 'dart:ffi';
+
+import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
 import 'package:products_app/core/usecases/use_case.dart';
 import 'package:products_app/products/domain/entities/products.dart';
-import 'package:products_app/products/domain/usecases/get_products_use_case.dart';
 
 enum ProductsPageStatus {initial, loading, loaded, error }
 
@@ -38,12 +38,10 @@ class ProductsPageState extends Equatable {
 
 class ProductsPageNotifier extends ChangeNotifier {
   ProductsPageNotifier({
-    required GetProductsUseCase getProductsUseCase,
-  }) : _getProductsUseCase = getProductsUseCase {
-    getProducts();
-  }
+    required UseCase getProductsUseCase,
+  }) : _getProductsUseCase = getProductsUseCase;
 
-  final GetProductsUseCase _getProductsUseCase;
+  final UseCase _getProductsUseCase;
 
   final ValueNotifier<ProductsPageState> productsState = ValueNotifier(
     const ProductsPageState(
