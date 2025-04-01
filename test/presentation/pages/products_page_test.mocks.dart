@@ -3,13 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:ui' as _i5;
+import 'dart:async' as _i3;
+import 'dart:ui' as _i4;
 
-import 'package:flutter/material.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:products_app/products/presentation/notifiers/products_page_notifier.dart'
-    as _i3;
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -24,9 +23,9 @@ import 'package:products_app/products/presentation/notifiers/products_page_notif
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeValueNotifier_0<T> extends _i1.SmartFake
-    implements _i2.ValueNotifier<T> {
-  _FakeValueNotifier_0(
+class _FakeProductsPageState_0 extends _i1.SmartFake
+    implements _i2.ProductsPageState {
+  _FakeProductsPageState_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -39,20 +38,29 @@ class _FakeValueNotifier_0<T> extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductsPageNotifier extends _i1.Mock
-    implements _i3.ProductsPageNotifier {
+    implements _i2.ProductsPageNotifier {
   @override
-  _i2.ValueNotifier<_i3.ProductsPageState> get productsState =>
-      (super.noSuchMethod(
+  _i2.ProductsPageState get productsState => (super.noSuchMethod(
         Invocation.getter(#productsState),
-        returnValue: _FakeValueNotifier_0<_i3.ProductsPageState>(
+        returnValue: _FakeProductsPageState_0(
           this,
           Invocation.getter(#productsState),
         ),
-        returnValueForMissingStub: _FakeValueNotifier_0<_i3.ProductsPageState>(
+        returnValueForMissingStub: _FakeProductsPageState_0(
           this,
           Invocation.getter(#productsState),
         ),
-      ) as _i2.ValueNotifier<_i3.ProductsPageState>);
+      ) as _i2.ProductsPageState);
+
+  @override
+  set productsState(_i2.ProductsPageState? _productsState) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #productsState,
+          _productsState,
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -62,26 +70,17 @@ class MockProductsPageNotifier extends _i1.Mock
       ) as bool);
 
   @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i4.Future<void> getProducts() => (super.noSuchMethod(
+  _i3.Future<void> getProducts() => (super.noSuchMethod(
         Invocation.method(
           #getProducts,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i4.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -90,10 +89,19 @@ class MockProductsPageNotifier extends _i1.Mock
       );
 
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i4.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
         ),
         returnValueForMissingStub: null,
       );
