@@ -66,9 +66,12 @@ class _ProductsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _productsNotifier.productsState,
-      builder: (context, state, child) {
+    return ListenableBuilder(
+      listenable: _productsNotifier,
+      builder: (context, child) {
+
+        final state = _productsNotifier.productsState;
+
         if (state.status == ProductsPageStatus.error) {
           return ErrorMessageContainer(
             errorMessage: state.errorMessage,

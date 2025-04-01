@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
@@ -6,14 +5,13 @@ import 'package:equatable/equatable.dart';
 import 'package:products_app/core/usecases/use_case.dart';
 import 'package:products_app/products/domain/entities/products.dart';
 
-enum ProductsPageStatus {initial, loading, loaded, error }
+enum ProductsPageStatus { initial, loading, loaded, error }
 
 class ProductsPageState extends Equatable {
   const ProductsPageState({
     this.status = ProductsPageStatus.initial,
-    required this.products,
-    required this.errorMessage,
-    
+    this.products,
+    this.errorMessage,
   });
 
   final ProductsPageStatus? status;
@@ -43,48 +41,39 @@ class ProductsPageNotifier extends ChangeNotifier {
 
   final UseCase _getProductsUseCase;
 
-  final ValueNotifier<ProductsPageState> productsState = ValueNotifier(
-    const ProductsPageState(
-      products: null,
-      errorMessage: null,
-    ),
-  );
-
-  @override
-  void dispose() {
-    productsState.dispose();
-    super.dispose();
-  }
+  ProductsPageState productsState = const ProductsPageState();
 
   Future<void> getProducts() async {
-    
-    productsState.value = productsState.value.copyWith(status: ProductsPageStatus.loading);
+    productsState = productsState.copyWith(status: ProductsPageStatus.loading);
+    notifyListeners();
 
     final result = await _getProductsUseCase(NoParams());
 
     result.fold(
       (failure) {
-        productsState.value = productsState.value.copyWith(
+        productsState = productsState.copyWith(
           status: ProductsPageStatus.error,
           errorMessage: failure.message ?? 'An error occurred',
         );
+        notifyListeners();
       },
       (products) {
         if (products.productsDetails.isEmpty) {
-          productsState.value = productsState.value.copyWith(
+          productsState = productsState.copyWith(
             status: ProductsPageStatus.error,
             errorMessage: 'No products found',
           );
+          notifyListeners();
           return;
         }
 
-        productsState.value = productsState.value.copyWith(
+        productsState = productsState.copyWith(
           status: ProductsPageStatus.loaded,
           products: products,
         );
+
+        notifyListeners();
       },
     );
   }
-
-  
 }

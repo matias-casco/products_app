@@ -52,9 +52,9 @@ void main() {
 
       // Assert
       expect(
-          productsPageNotifier.productsState.value.products, isA<Products>());
+          productsPageNotifier.productsState.products, isA<Products>());
 
-      expect(productsPageNotifier.productsState.value.status,
+      expect(productsPageNotifier.productsState.status,
           ProductsPageStatus.loaded);
     });
 
@@ -68,7 +68,7 @@ void main() {
       await productsPageNotifier.getProducts();
 
       // Assert
-      expect(productsPageNotifier.productsState.value.status,
+      expect(productsPageNotifier.productsState.status,
           ProductsPageStatus.error);
     });
 
