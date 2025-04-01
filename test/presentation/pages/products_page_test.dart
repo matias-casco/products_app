@@ -130,27 +130,27 @@ void main() {
           findsOneWidget);
     });
 
-    // testWidgets('Navigate to ProductDetailsPage when tapping a product',
-    //     (tester) async {
-    //   when(mockNotifier.productsState).thenReturn(
-    //     ProductsPageState(
-    //       status: ProductsPageStatus.loaded,
-    //       products: mockProducts,
-    //       errorMessage: null,
-    //     ),
-    //   );
+    testWidgets('Navigate to ProductDetailsPage when tapping a product',
+        (tester) async {
+      when(mockNotifier.productsState).thenReturn(
+        ProductsPageState(
+          status: ProductsPageStatus.loaded,
+          products: mockProducts,
+          errorMessage: null,
+        ),
+      );
 
-    //   await mockNetworkImagesFor(() async {
-    //     await tester.pumpWidget(createTestWidget());
-    //     await tester.pump(const Duration(seconds: 1));
+      await mockNetworkImagesFor(() async {
+        await tester.pumpWidget(createTestWidget());
+        await tester.pump(const Duration(seconds: 1));
 
-    //     await tester.tap(find.text(mockProducts.productsDetails.first.title));
-    //     await tester.pump();
-    //     await tester.pump(const Duration(milliseconds: 500));
-    //     await tester.pump(const Duration(milliseconds: 500));
-    //   });
+        await tester.tap(find.text(mockProducts.productsDetails.first.title));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pump(const Duration(milliseconds: 500));
+      });
 
-    //   expect(find.byType(ProductDetailsPage), findsOneWidget);
-    // });
+      expect(find.byType(ProductDetailsPage), findsOneWidget);
+    });
   });
 }
