@@ -1,40 +1,22 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:products_app/core/injector/injector.dart';
-import 'package:products_app/products/presentation/notifiers/products_page_notifier.dart';
+import 'package:products_app/products/presentation/cubits/products_page/products_page_cubit.dart';
 import 'package:products_app/products/presentation/pages/product_details_page.dart';
 import 'package:products_app/products/presentation/widgets/product_card.dart';
 import 'package:products_app/products/presentation/widgets/widgets.dart';
 
-class ProductsView extends StatefulWidget {
+class ProductsView extends StatelessWidget {
   const ProductsView({super.key});
-
-  @override
-  State<ProductsView> createState() => _ProductsViewState();
-}
-
-class _ProductsViewState extends State<ProductsView> {
-  final _productsNotifier = sl<ProductsPageNotifier>();
-
-  @override
-  void dispose() {
-    _productsNotifier.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    _productsNotifier.getProducts();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
-        return _productsNotifier.getProducts();
+        context.read<ProductsPageCubit>().getProducts();
+        return Future.value();
       },
       child: SingleChildScrollView(
         child: Column(
@@ -49,7 +31,7 @@ class _ProductsViewState extends State<ProductsView> {
             const SizedBox(
               height: 16,
             ),
-            _ProductsBuilder(productsNotifier: _productsNotifier),
+            const _ProductsBuilder(),
           ],
         ),
       ),
@@ -58,25 +40,17 @@ class _ProductsViewState extends State<ProductsView> {
 }
 
 class _ProductsBuilder extends StatelessWidget {
-  const _ProductsBuilder({
-    required ProductsPageNotifier productsNotifier,
-  }) : _productsNotifier = productsNotifier;
-
-  final ProductsPageNotifier _productsNotifier;
+  const _ProductsBuilder();
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: _productsNotifier,
-      builder: (context, child) {
-
-        final state = _productsNotifier.productsState;
-
+    return BlocBuilder<ProductsPageCubit, ProductsPageState>(
+      builder: (context, state) {
         if (state.status == ProductsPageStatus.error) {
           return ErrorMessageContainer(
             errorMessage: state.errorMessage,
             onRetryPressed: () {
-              _productsNotifier.getProducts();
+              context.read<ProductsPageCubit>().getProducts();
             },
           );
         }
@@ -85,7 +59,7 @@ class _ProductsBuilder extends StatelessWidget {
             state.products == null) {
           return const Column(
             children: [
-               SizedBox(
+              SizedBox(
                 height: 200,
               ),
               Center(
