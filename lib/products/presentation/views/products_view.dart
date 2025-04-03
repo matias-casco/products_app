@@ -18,23 +18,7 @@ class ProductsView extends StatelessWidget {
         context.read<ProductsPageCubit>().getProducts();
         return Future.value();
       },
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 24,
-            ),
-            Text(
-              'Special Offers',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            const _ProductsBuilder(),
-          ],
-        ),
-      ),
+      child: const _ProductsBuilder(),
     );
   }
 }
@@ -69,21 +53,39 @@ class _ProductsBuilder extends StatelessWidget {
           );
         }
 
-        return Column(
-          children: List.generate(
-            state.products!.productsDetails.length,
-            (index) {
-              final product = state.products!.productsDetails[index];
-              return ProductCard(
-                  product: product,
-                  onTap: () {
-                    context.push(
-                      ProductDetailsPage.path,
-                      extra: ProductDetailsExtra(details: product),
-                    );
-                  });
-            },
-          ),
+        final products = state.products!.productsDetails;
+
+        return CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 24, bottom: 16),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: Text(
+                    'Special Offers',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: products.length,
+                (context, index) {
+                  final product = products[index];
+                  return ProductCard(
+                    product: product,
+                    onTap: () {
+                      context.push(
+                        ProductDetailsPage.path,
+                        extra: ProductDetailsExtra(details: product),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         );
       },
     );
