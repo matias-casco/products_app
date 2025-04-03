@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 
 import 'package:products_app/core/http_client/http_client_interface.dart';
+import 'package:products_app/core/http_client/interceptors/internet_checker_interceptor.dart';
 import 'package:products_app/core/http_client/status_code_validator.dart';
 
 class DioHttpClientImpl extends HttpClientInterface {
@@ -12,6 +13,7 @@ class DioHttpClientImpl extends HttpClientInterface {
 
   Future<Dio> get dio async {
     final dio = await _createDio();
+    dio.interceptors.add(InternetCheckerInterceptor());
     return dio;
   }
 
