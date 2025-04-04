@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:products_app/core/blocs/check_ethernet/check_ethernet_bloc.dart';
 import 'package:products_app/core/injector/injector.dart' as injector;
 import 'package:products_app/core/router/app_router.dart';
 
 void main() {
   injector.init();
 
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => CheckEthernetBloc(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
