@@ -12,9 +12,9 @@ class ProductsDatasourceImpl implements ProductsDatasource {
   final HttpClientInterface _client;
 
   @override
-  Future<ProductsModel> getProducts()async  {
+  Future<ProductsModel> getProducts() async {
     return _client.getRequest<ProductsModel>(
-    'https://dummyjson.com/products',
+      '/products?limit=12',
       converter: (json) => ProductsModel.fromJson(json),
     );
   }

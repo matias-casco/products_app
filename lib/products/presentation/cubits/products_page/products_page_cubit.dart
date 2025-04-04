@@ -16,6 +16,9 @@ class ProductsPageCubit extends Cubit<ProductsPageState> {
   final GetProductsUseCase _getProductsUseCase;
 
   Future<void> getProducts() async {
+    
+    if (state.status == ProductsPageStatus.loading) return;
+
     emit(state.copyWith(status: ProductsPageStatus.loading));
 
     final result = await _getProductsUseCase(NoParams());

@@ -5,21 +5,28 @@ import 'package:dio/dio.dart';
 import 'package:products_app/core/http_client/http_client_interface.dart';
 import 'package:products_app/core/http_client/interceptors/internet_checker_interceptor.dart';
 import 'package:products_app/core/http_client/status_code_validator.dart';
+import 'package:products_app/core/logger/logger.dart';
 
 class DioHttpClientImpl extends HttpClientInterface {
-  DioHttpClientImpl();
+  DioHttpClientImpl({
+    required Logger logger,
+  }) : _logger = logger;
 
   static const StatusCodeValidator validator = StatusCodeValidator();
+
+  final Logger _logger;
 
   Future<Dio> get dio async {
     final dio = await _createDio();
     dio.interceptors.add(InternetCheckerInterceptor());
+    dio.interceptors.add(_logger.dioLogger);
     return dio;
   }
 
   Future<Dio> _createDio() async {
     return Dio(
       BaseOptions(
+        baseUrl: 'https://dummyjson.com',
         receiveTimeout: const Duration(minutes: 1),
         connectTimeout: const Duration(minutes: 1),
         contentType: 'application/json',
