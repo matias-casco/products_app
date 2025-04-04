@@ -53,8 +53,6 @@ class _ProductsBuilder extends StatelessWidget {
           );
         }
 
-        final products = state.products!.productsDetails;
-
         return CustomScrollView(
           slivers: [
             SliverPadding(
@@ -70,9 +68,9 @@ class _ProductsBuilder extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                childCount: products.length,
+                childCount: state.products!.productsDetails.length,
                 (context, index) {
-                  final product = products[index];
+                  final product = state.products!.productsDetails[index];
                   return ProductCard(
                     product: product,
                     onTap: () {
