@@ -9,10 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_app/core/blocs/check_ethernet/check_ethernet_bloc.dart';
 import 'package:products_app/core/injector/injector.dart' as injector;
 import 'package:products_app/core/router/app_router.dart';
+import 'package:products_app/firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
    FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
