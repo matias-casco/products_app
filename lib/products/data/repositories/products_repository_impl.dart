@@ -27,14 +27,6 @@ class ProductsRepositoryImpl extends ProductsRepository {
           message: e.readableOutput,
         ),
       );
-    } on NoInternetConnectionException catch (e) {
-      debugPrint('${e.runtimeType} ${e.message}');
-      return const Left(
-        ServerFailure(
-          code: ErrorCode.unexpected,
-          message: 'No internet connection',
-        ),
-      );
     } on Exception catch (e) {
       debugPrint('${e.runtimeType} ${e.toString()}');
       return const Left(

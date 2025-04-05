@@ -9,19 +9,23 @@ import 'package:products_app/core/logger/logger.dart';
 class DioHttpClientImpl extends HttpClientInterface {
   DioHttpClientImpl({
     required Logger logger,
+    required DioClientExceptionInterceptor dioClientExceptionInterceptor,
     required ErrorInterceptor errorInterceptor,
     required InternetCheckerInterceptor internetCheckerInterceptor,
   })  : _logger = logger,
+        _dioClientExceptionInterceptor = dioClientExceptionInterceptor,
         _errorInterceptor = errorInterceptor,
         _internetCheckerInterceptor = internetCheckerInterceptor;
 
   final Logger _logger;
+  final DioClientExceptionInterceptor _dioClientExceptionInterceptor;
   final ErrorInterceptor _errorInterceptor;
   final InternetCheckerInterceptor _internetCheckerInterceptor;
 
   Future<Dio> get dio async {
     final dio = await _createDio();
     dio.interceptors.add(_logger.dioLogger);
+    dio.interceptors.add(_dioClientExceptionInterceptor);
     dio.interceptors.add(_internetCheckerInterceptor);
     dio.interceptors.add(_errorInterceptor);
     return dio;
@@ -110,7 +114,7 @@ class DioHttpClientImpl extends HttpClientInterface {
       data: data,
       options: Options(headers: headers),
     );
-    
+
     return converter(response.data);
   }
 }
