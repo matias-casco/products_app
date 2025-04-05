@@ -3,23 +3,27 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 
 import 'package:products_app/core/http_client/http_client_interface.dart';
-import 'package:products_app/core/http_client/interceptors/internet_checker_interceptor.dart';
-import 'package:products_app/core/http_client/status_code_validator.dart';
+import 'package:products_app/core/http_client/interceptors/interceptors.dart';
 import 'package:products_app/core/logger/logger.dart';
 
 class DioHttpClientImpl extends HttpClientInterface {
   DioHttpClientImpl({
     required Logger logger,
-  }) : _logger = logger;
-
-  static const StatusCodeValidator validator = StatusCodeValidator();
+    required ErrorInterceptor errorInterceptor,
+    required InternetCheckerInterceptor internetCheckerInterceptor,
+  })  : _logger = logger,
+        _errorInterceptor = errorInterceptor,
+        _internetCheckerInterceptor = internetCheckerInterceptor;
 
   final Logger _logger;
+  final ErrorInterceptor _errorInterceptor;
+  final InternetCheckerInterceptor _internetCheckerInterceptor;
 
   Future<Dio> get dio async {
     final dio = await _createDio();
-    dio.interceptors.add(InternetCheckerInterceptor());
     dio.interceptors.add(_logger.dioLogger);
+    dio.interceptors.add(_internetCheckerInterceptor);
+    dio.interceptors.add(_errorInterceptor);
     return dio;
   }
 
@@ -55,8 +59,6 @@ class DioHttpClientImpl extends HttpClientInterface {
       ),
     );
 
-    validator.validate(response);
-
     return converter(response.data);
   }
 
@@ -76,7 +78,6 @@ class DioHttpClientImpl extends HttpClientInterface {
       options: Options(headers: headers),
     );
 
-    validator.validate(response);
 
     return converter(response.data);
   }
@@ -92,7 +93,6 @@ class DioHttpClientImpl extends HttpClientInterface {
       url,
       options: Options(headers: headers),
     );
-    validator.validate(response);
 
     return converter(response.data);
   }
@@ -110,8 +110,7 @@ class DioHttpClientImpl extends HttpClientInterface {
       data: data,
       options: Options(headers: headers),
     );
-    validator.validate(response);
-
+    
     return converter(response.data);
   }
 }
