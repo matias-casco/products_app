@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:products_app/core/blocs/check_ethernet/check_ethernet_bloc.dart';
+import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
 import 'package:products_app/core/injector/injector.dart' as injector;
 import 'package:products_app/core/router/app_router.dart';
 import 'package:products_app/firebase_options.dart';
@@ -31,7 +31,7 @@ void main() async {
 
   runApp(
     BlocProvider(
-      create: (context) => CheckEthernetBloc(),
+      create: (context) => InternetCheckerBloc(),
       child: const MyApp(),
     ),
   );

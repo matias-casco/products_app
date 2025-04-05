@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:products_app/core/blocs/check_ethernet/check_ethernet_bloc.dart';
+import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
 
 import 'package:products_app/core/injector/injector.dart';
 import 'package:products_app/products/domain/usecases/get_products_use_case.dart';
@@ -22,7 +22,7 @@ class ProductsPage extends StatelessWidget {
           productsRepository: sl(),
         ),
       )..getProducts(),
-      child: BlocListener<CheckEthernetBloc, CheckEthernetState>(
+      child: BlocListener<InternetCheckerBloc, InternetCheckerState>(
         //escuchar solo cuando el estado sea diferente al anterior
         listenWhen: (previous, current) {
           if (current is ConnectedState) {

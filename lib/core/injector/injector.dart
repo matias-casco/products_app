@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 
 import 'package:products_app/core/http_client/dio_http_client_impl.dart';
 import 'package:products_app/core/http_client/http_client_interface.dart';
+import 'package:products_app/core/http_client/interceptors/error_interceptor.dart';
+import 'package:products_app/core/http_client/interceptors/internet_checker_interceptor.dart';
 import 'package:products_app/core/logger/logger.dart';
 import 'package:products_app/core/usecases/use_case.dart';
 import 'package:products_app/products/data/datasources/products_datasource.dart';
@@ -12,15 +14,18 @@ import 'package:products_app/products/domain/usecases/get_products_use_case.dart
 final sl = GetIt.instance;
 
 Future<void> init() async {
-
-   // logger
+  // logger
   sl.registerLazySingleton<Logger>(
     () => LoggerImpl(),
   );
 
   // http client
   sl.registerLazySingleton<HttpClientInterface>(
-    () => DioHttpClientImpl(logger: sl<Logger>()),
+    () => DioHttpClientImpl(
+      logger: sl<Logger>(),
+      errorInterceptor: ErrorInterceptor(),
+      internetCheckerInterceptor: InternetCheckerInterceptor(),
+    ),
   );
 
   // products
