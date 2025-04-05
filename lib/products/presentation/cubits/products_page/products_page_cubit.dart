@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:products_app/core/usecases/use_case.dart';
-import 'package:products_app/products/domain/entities/products.dart';
+import 'package:products_app/products/domain/entities/products/products.dart';
 import 'package:products_app/products/domain/usecases/get_products_use_case.dart';
 
 part 'products_page_state.dart';

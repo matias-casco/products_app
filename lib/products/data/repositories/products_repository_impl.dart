@@ -4,7 +4,7 @@ import 'package:products_app/core/errors/failures.dart';
 import 'package:products_app/core/http_client/exceptions/exceptions.dart';
 import 'package:products_app/core/http_client/exceptions/no_internet_connection_exception.dart';
 import 'package:products_app/products/data/datasources/products_datasource.dart';
-import 'package:products_app/products/domain/entities/products.dart';
+import 'package:products_app/products/domain/entities/products/products.dart';
 import 'package:products_app/products/domain/repositories/products_repository.dart';
 
 class ProductsRepositoryImpl extends ProductsRepository {

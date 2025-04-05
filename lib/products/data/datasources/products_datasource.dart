@@ -1,5 +1,5 @@
 import 'package:products_app/core/http_client/http_client_interface.dart';
-import 'package:products_app/products/data/models/products_model.dart';
+import 'package:products_app/products/data/models/products/products_model.dart';
 
 abstract class ProductsDatasource {
   Future<ProductsModel> getProducts();

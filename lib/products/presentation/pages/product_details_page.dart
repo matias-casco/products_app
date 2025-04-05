@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:products_app/products/domain/entities/product_details.dart';
+import 'package:products_app/products/domain/entities/products/product_details.dart';
 import 'package:products_app/products/presentation/views/product_details_view.dart';
 
 class ProductDetailsExtra {
