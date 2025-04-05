@@ -13,13 +13,9 @@ class ProductsDatasourceImpl implements ProductsDatasource {
 
   @override
   Future<ProductsModel> getProducts() async {
-    try {
     return _client.getRequest<ProductsModel>(
       '/products?limit=12',
       converter: (json) => ProductsModel.fromJson(json),
     );
-    } catch (_) {
-      rethrow;
-    }
   }
 }
