@@ -4,6 +4,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:products_app/core/http_client/exceptions/exceptions.dart';
 
 class ErrorInterceptor extends Interceptor {
+  static String defaultReadableOutput = 'An error occurred, please try again';
+
   @override
   Future<void> onError(
     DioException err,
@@ -22,6 +24,7 @@ class ErrorInterceptor extends Interceptor {
 
       throw DefaultException(
         code: GenericException.getErrorCodeFromString('GENERIC_ERROR'),
+        readableOutput: defaultReadableOutput,
         returnMessage: 'Status code ${err.response?.statusCode} ${err.message}',
       );
     }
@@ -44,7 +47,7 @@ class ErrorInterceptor extends Interceptor {
         if (err.response!.statusCode == 400) {
           throw BadRequestException(
             code: GenericException.getErrorCodeFromString('BAD_REQUEST'),
-            readableOutput: err.response!.data['messages'][0]['readableOutput'],
+            readableOutput: defaultReadableOutput,
             returnMessage:
                 'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
           );
@@ -54,6 +57,7 @@ class ErrorInterceptor extends Interceptor {
           throw DefaultException(
             code: GenericException.getErrorCodeFromString(
                 err.response!.data['messages'][0]['code']),
+            readableOutput: defaultReadableOutput,
             returnMessage:
                 'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
           );
@@ -74,6 +78,7 @@ class ErrorInterceptor extends Interceptor {
         );
         throw DefaultException(
           code: GenericException.getErrorCodeFromString('GENERIC_ERROR'),
+          readableOutput: defaultReadableOutput,
           returnMessage:
               'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
         );
