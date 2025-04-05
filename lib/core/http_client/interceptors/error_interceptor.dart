@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:products_app/core/http_client/exceptions/exceptions.dart';
