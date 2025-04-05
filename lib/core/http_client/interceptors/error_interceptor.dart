@@ -22,16 +22,18 @@ class ErrorInterceptor extends Interceptor {
         ],
       );
 
-      throw DefaultException(
-        code: GenericException.getErrorCodeFromString('GENERIC_ERROR'),
-        readableOutput: defaultReadableOutput,
-        returnMessage: 'Status code ${err.response?.statusCode} ${err.message}',
+      handler.reject(
+        throw DefaultException(
+          code: GenericException.getErrorCodeFromString('GENERIC_ERROR'),
+          readableOutput: defaultReadableOutput,
+          returnMessage:
+              'Status code ${err.response?.statusCode} ${err.message}',
+          requestOptions: err.requestOptions,
+        ),
       );
-    }
-    if ((err.response!.statusCode ?? 400) < 400) {
+    } else if ((err.response!.statusCode ?? 400) < 400) {
       return;
-    }
-    if ((err.response!.statusCode ?? 400) > 399 &&
+    } else if ((err.response!.statusCode ?? 400) > 399 &&
         (err.response!.statusCode ?? 0) < 500) {
       if (err.response!.data is Map<String, dynamic>) {
         FirebaseCrashlytics.instance.recordError(
@@ -45,27 +47,31 @@ class ErrorInterceptor extends Interceptor {
         );
 
         if (err.response!.statusCode == 400) {
-          throw BadRequestException(
-            code: GenericException.getErrorCodeFromString('BAD_REQUEST'),
-            readableOutput: defaultReadableOutput,
-            returnMessage:
-                'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
+          handler.reject(
+            throw BadRequestException(
+              code: GenericException.getErrorCodeFromString('BAD_REQUEST'),
+              readableOutput: defaultReadableOutput,
+              returnMessage:
+                  'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
+              requestOptions: err.requestOptions,
+            ),
           );
         }
 
         if (err.response!.statusCode != 200) {
-          throw DefaultException(
-            code: GenericException.getErrorCodeFromString(
-                err.response!.data['messages'][0]['code']),
-            readableOutput: defaultReadableOutput,
-            returnMessage:
-                'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
+          handler.reject(
+            throw DefaultException(
+              code: GenericException.getErrorCodeFromString(
+                  err.response!.data['messages'][0]['code']),
+              readableOutput: defaultReadableOutput,
+              returnMessage:
+                  'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
+              requestOptions: err.requestOptions,
+            ),
           );
         }
       }
-    }
-
-    if (err.response!.statusCode! >= 500) {
+    } else if (err.response!.statusCode! >= 500) {
       if (err.response!.statusCode == 503) {
         FirebaseCrashlytics.instance.recordError(
           err,
@@ -76,15 +82,18 @@ class ErrorInterceptor extends Interceptor {
             'Response: ${err.response?.statusCode} ${err.response?.statusMessage}',
           ],
         );
-        throw DefaultException(
-          code: GenericException.getErrorCodeFromString('GENERIC_ERROR'),
-          readableOutput: defaultReadableOutput,
-          returnMessage:
-              'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
+        handler.reject(
+          throw DefaultException(
+            code: GenericException.getErrorCodeFromString('GENERIC_ERROR'),
+            readableOutput: defaultReadableOutput,
+            returnMessage:
+                'Status code ${err.response!.statusCode} ${err.response!.statusMessage}',
+            requestOptions: err.requestOptions,
+          ),
         );
       }
+    } else {
+      return handler.next(err);
     }
-
-    return handler.next(err);
   }
 }

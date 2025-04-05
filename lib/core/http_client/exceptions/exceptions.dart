@@ -9,6 +9,7 @@ class DefaultException extends GenericException {
     super.returnMessage,
     super.readableOutput = defaultReadableOutput,
     super.code,
+    required super.requestOptions,
   });
 }
 
@@ -17,5 +18,14 @@ class BadRequestException extends GenericException {
     super.readableOutput,
     super.returnMessage,
     super.code,
+    required super.requestOptions,
+  });
+}
+class HTTPClientException extends GenericException {
+  HTTPClientException({
+    super.readableOutput,
+    super.returnMessage,
+    super.code,
+    required super.requestOptions,
   });
 }

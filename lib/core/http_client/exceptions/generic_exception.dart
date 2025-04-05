@@ -1,4 +1,6 @@
-abstract class GenericException implements Exception {
+import 'package:dio/dio.dart';
+
+abstract class GenericException extends DioException implements Exception {
   final String? readableOutput;
   final String? returnMessage;
   final ErrorCode? code;
@@ -16,6 +18,7 @@ abstract class GenericException implements Exception {
     this.readableOutput,
     this.returnMessage,
     this.code,
+    required super.requestOptions,
   });
 
   static ErrorCode getErrorCodeFromString(String code) {
@@ -26,6 +29,7 @@ abstract class GenericException implements Exception {
         return ErrorCode.unexpected;
       case "BAD_REQUEST":
         return ErrorCode.badRequest;
+      case "NO_INTERNET_CONNECTION":
       default:
         return ErrorCode.unknown;
     }
@@ -39,6 +43,8 @@ abstract class GenericException implements Exception {
         return "UNEXPECTED";
       case ErrorCode.badRequest:
         return "BAD_REQUEST";
+      case ErrorCode.noInternetConnection:
+        return "NO_INTERNET_CONNECTION";
       default:
         return "UNKNOWN";
     }
@@ -50,4 +56,5 @@ enum ErrorCode {
   unexpected,
   unknown,
   badRequest,
+  noInternetConnection,
 }
