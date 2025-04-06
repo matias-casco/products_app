@@ -8,6 +8,7 @@ import 'package:products_app/core/usecases/use_case.dart';
 import 'package:products_app/products/data/datasources/products_datasource.dart';
 import 'package:products_app/products/data/repositories/products_repository_impl.dart';
 import 'package:products_app/products/domain/repositories/products_repository.dart';
+import 'package:products_app/products/domain/usecases/get_categories_use_case.dart';
 import 'package:products_app/products/domain/usecases/get_products_use_case.dart';
 
 final sl = GetIt.instance;
@@ -44,6 +45,10 @@ Future<void> init() async {
   sl.registerLazySingleton<ProductsRepository>(
       () => ProductsRepositoryImpl(productsDatasource: sl()));
 
-  sl.registerLazySingleton<UseCase>(
+  sl.registerLazySingleton<GetProductsUseCase>(
       () => GetProductsUseCase(productsRepository: sl()));
+
+  sl.registerLazySingleton(
+    () => GetCategoriesUseCase(productsRepository: sl()),
+  );
 }

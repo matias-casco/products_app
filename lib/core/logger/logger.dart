@@ -18,7 +18,14 @@ class LoggerImpl implements Logger {
               settings: TalkerLoggerSettings(enableColors: false),
               output: (String message) {
                 for (final line in message.split('\n')) {
-                  developer.log(line);
+
+                  String cleanLine = line;
+
+                  if (cleanLine.length > 120) {
+                    cleanLine = '${line.substring(0, 120)}...';
+                  }
+
+                  developer.log(cleanLine);
                 }
               },
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
 
+import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
 import 'package:products_app/core/injector/injector.dart';
-import 'package:products_app/products/domain/usecases/get_products_use_case.dart';
+import 'package:products_app/products/presentation/cubits/categories_list/categories_list_cubit.dart';
 import 'package:products_app/products/presentation/cubits/products_page/products_page_cubit.dart';
 import 'package:products_app/products/presentation/views/products_view.dart';
 
@@ -16,14 +16,20 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ProductsPageCubit(
-        getProductsUseCase: GetProductsUseCase(
-          productsRepository: sl(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ProductsPageCubit(
+            getProductsUseCase: sl(),
+          )..getProducts(),
         ),
-      )..getProducts(),
+        BlocProvider(
+          create: (context) => CategoriesListCubit(
+            getCategoriesUseCase: sl(),
+          )..getCategories(),
+        ),
+      ],
       child: BlocListener<InternetCheckerBloc, InternetCheckerState>(
-        //escuchar solo cuando el estado sea diferente al anterior
         listenWhen: (previous, current) {
           if (current is ConnectedState) {
             return previous is NotConnectedState;
@@ -33,9 +39,8 @@ class ProductsPage extends StatelessWidget {
           }
           return false;
         },
-
         listener: (context, state) {
-          if (state is ConnectedState){
+          if (state is ConnectedState) {
             context.read<ProductsPageCubit>().getProducts();
           }
           if (state is NotConnectedState) {
@@ -82,8 +87,80 @@ class ProductsPage extends StatelessWidget {
         },
         child: const Scaffold(
           appBar: _ProductsPageAppBar(),
+          drawer: _Drawer(),
           body: ProductsView(),
         ),
+      ),
+    );
+  }
+}
+
+class _Drawer extends StatelessWidget {
+  const _Drawer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              top: 32,
+              left: 16,
+              right: 16,
+            ),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Categories',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ),
+          const Divider(),
+          Expanded(
+            child: BlocBuilder<CategoriesListCubit, CategoriesListState>(
+              builder: (context, state) {
+                if (state.status == CategoriesListStatus.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state.status == CategoriesListStatus.error) {
+                  return Center(
+                    child: Text(
+                      state.errorMessage ?? 'Something went wrong',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  );
+                }
+                if (state.status == CategoriesListStatus.loaded) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 4,
+                    ),
+                    itemCount: state.categories!.length,
+                    itemBuilder: (context, index) {
+                      final category = state.categories![index];
+                      return ListTile(
+                        title: Text(category.name),
+                        onTap: () {
+                          print('Category tapped: ${category.name}');
+                        },
+                      );
+                    },
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
