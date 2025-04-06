@@ -64,4 +64,30 @@ class ProductsRepositoryImpl extends ProductsRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, Products>> getProductsByCategory(
+      {required String slug}) async {
+    try {
+      final products = await _productsDatasource.getProductsByCategory(slug: slug);
+      return Right(
+        products.toEntity(),
+      );
+    } on GenericException catch (e) {
+      return Left(
+        ServerFailure(
+          code: e.code,
+          message: e.readableOutput,
+        ),
+      );
+    } on Exception catch (e) {
+      debugPrint('${e.runtimeType} ${e.toString()}');
+      return const Left(
+        ServerFailure(
+          code: ErrorCode.unexpected,
+          message: 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
 }

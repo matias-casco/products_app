@@ -60,7 +60,7 @@ class _ProductsBuilder extends StatelessWidget {
               sliver: SliverToBoxAdapter(
                 child: Center(
                   child: Text(
-                    'Special Offers',
+                    state.title,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),

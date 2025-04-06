@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
 import 'package:products_app/core/injector/injector.dart';
-import 'package:products_app/products/presentation/cubits/categories_list/categories_list_cubit.dart';
 import 'package:products_app/products/presentation/cubits/products_page/products_page_cubit.dart';
 import 'package:products_app/products/presentation/views/products_view.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
+  const ProductsPage({super.key, this.categorySlug});
 
   static const name = 'Products';
   static const path = '/products';
+  final String? categorySlug;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +21,12 @@ class ProductsPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => ProductsPageCubit(
-            getProductsUseCase: sl(),
-          )..getProducts(),
-        ),
-        BlocProvider(
-          create: (context) => CategoriesListCubit(
             getCategoriesUseCase: sl(),
-          )..getCategories(),
+            getProductsUseCase: sl(),
+            getProductsByCategoryUseCase: sl(),
+          )..init(
+              categorySlug: categorySlug,
+            ),
         ),
       ],
       child: BlocListener<InternetCheckerBloc, InternetCheckerState>(
@@ -96,9 +96,7 @@ class ProductsPage extends StatelessWidget {
 }
 
 class _Drawer extends StatelessWidget {
-  const _Drawer({
-    super.key,
-  });
+  const _Drawer();
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +121,14 @@ class _Drawer extends StatelessWidget {
           ),
           const Divider(),
           Expanded(
-            child: BlocBuilder<CategoriesListCubit, CategoriesListState>(
+            child: BlocBuilder<ProductsPageCubit, ProductsPageState>(
               builder: (context, state) {
-                if (state.status == CategoriesListStatus.loading) {
+                if (state.categoriesStatus == CategoriesListStatus.loading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (state.status == CategoriesListStatus.error) {
+                if (state.categoriesStatus == CategoriesListStatus.error) {
                   return Center(
                     child: Text(
                       state.errorMessage ?? 'Something went wrong',
@@ -138,7 +136,7 @@ class _Drawer extends StatelessWidget {
                     ),
                   );
                 }
-                if (state.status == CategoriesListStatus.loaded) {
+                if (state.categoriesStatus == CategoriesListStatus.loaded) {
                   return ListView.builder(
                     padding: const EdgeInsets.symmetric(
                       vertical: 0,
@@ -150,7 +148,10 @@ class _Drawer extends StatelessWidget {
                       return ListTile(
                         title: Text(category.name),
                         onTap: () {
-                          print('Category tapped: ${category.name}');
+                         context.push(
+                            '/products/${category.slug}',
+                          );
+                          context.pop();
                         },
                       );
                     },
@@ -180,15 +181,20 @@ class _ProductsPageAppBar extends StatelessWidget
           bottom: Radius.circular(16),
         ),
       ),
-      title: Container(
-        margin: const EdgeInsets.only(
-          bottom: 12,
-        ),
-        child: Text(
-          'Buy Today',
-          style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+      title: InkWell(
+        onTap: () {
+          context.read<ProductsPageCubit>().getProducts();
+        },
+        child: Container(
+          margin: const EdgeInsets.only(
+            bottom: 12,
+          ),
+          child: Text(
+            'Buy Today',
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
         ),
       ),
     );
