@@ -1,4 +1,4 @@
-import 'package:products_app/products/domain/entities/review.dart';
+import 'package:products_app/products/domain/entities/products/review.dart';
 
 class ReviewModel {
     final int rating;

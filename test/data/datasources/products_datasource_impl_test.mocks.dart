@@ -13,9 +13,9 @@ import 'package:products_app/core/http_client/http_client_interface.dart'
     as _i5;
 import 'package:products_app/products/data/datasources/products_datasource.dart'
     as _i7;
-import 'package:products_app/products/data/models/product_model.dart' as _i11;
-import 'package:products_app/products/data/models/products_model.dart' as _i3;
-import 'package:products_app/products/domain/entities/products.dart' as _i4;
+import 'package:products_app/products/data/models/products/product_model.dart' as _i11;
+import 'package:products_app/products/data/models/products/products_model.dart' as _i3;
+import 'package:products_app/products/domain/entities/products/products.dart' as _i4;
 import 'package:products_app/products/domain/repositories/products_repository.dart'
     as _i8;
 

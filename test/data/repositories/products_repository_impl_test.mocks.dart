@@ -8,11 +8,11 @@ import 'dart:async' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:products_app/products/data/datasources/products_datasource.dart'
     as _i4;
-import 'package:products_app/products/data/models/product_model.dart' as _i6;
-import 'package:products_app/products/data/models/products_model.dart' as _i2;
-import 'package:products_app/products/domain/entities/product_details.dart'
+import 'package:products_app/products/data/models/products/product_model.dart' as _i6;
+import 'package:products_app/products/data/models/products/products_model.dart' as _i2;
+import 'package:products_app/products/domain/entities/products/product_details.dart'
     as _i7;
-import 'package:products_app/products/domain/entities/products.dart' as _i3;
+import 'package:products_app/products/domain/entities/products/products.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:products_app/products/domain/entities/dimensions.dart';
-import 'package:products_app/products/domain/entities/meta_data_entity.dart';
-import 'package:products_app/products/domain/entities/review.dart';
+import 'package:products_app/products/domain/entities/products/dimensions.dart';
+import 'package:products_app/products/domain/entities/products/meta_data_entity.dart';
+import 'package:products_app/products/domain/entities/products/review.dart';
 
 class ProductDetails extends Equatable {
   const ProductDetails({
