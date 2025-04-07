@@ -1,4 +1,4 @@
-import 'package:products_app/products/domain/entities/meta_data_entity.dart';
+import 'package:products_app/products/domain/entities/products/meta_data_entity.dart';
 
 class MetaModel {
   final DateTime createdAt;

@@ -5,9 +5,9 @@ import 'package:mockito/mockito.dart';
 
 import 'package:products_app/core/errors/failures.dart';
 import 'package:products_app/products/data/datasources/products_datasource.dart';
-import 'package:products_app/products/data/models/products_model.dart';
+import 'package:products_app/products/data/models/products/products_model.dart';
 import 'package:products_app/products/data/repositories/products_repository_impl.dart';
-import 'package:products_app/products/domain/entities/products.dart';
+import 'package:products_app/products/domain/entities/products/products.dart';
 
 import 'products_repository_impl_test.mocks.dart';
 

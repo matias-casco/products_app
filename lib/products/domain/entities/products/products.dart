@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:products_app/products/domain/entities/product_details.dart';
+import 'package:products_app/products/domain/entities/products/product_details.dart';
 
 class Products extends Equatable {
   final List<ProductDetails> productsDetails;

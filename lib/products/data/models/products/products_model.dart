@@ -1,5 +1,5 @@
-import 'package:products_app/products/data/models/product_model.dart';
-import 'package:products_app/products/domain/entities/products.dart';
+import 'package:products_app/products/data/models/products/product_model.dart';
+import 'package:products_app/products/domain/entities/products/products.dart';
 
 
 class ProductsModel {

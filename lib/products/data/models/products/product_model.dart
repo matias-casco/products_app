@@ -1,7 +1,7 @@
-import 'package:products_app/products/data/models/dimensions_model.dart';
-import 'package:products_app/products/data/models/meta_model.dart';
-import 'package:products_app/products/data/models/review_model.dart';
-import 'package:products_app/products/domain/entities/product_details.dart';
+import 'package:products_app/products/data/models/products/dimensions_model.dart';
+import 'package:products_app/products/data/models/products/meta_model.dart';
+import 'package:products_app/products/data/models/products/review_model.dart';
+import 'package:products_app/products/domain/entities/products/product_details.dart';
 
 class ProductModel {
   final int id;

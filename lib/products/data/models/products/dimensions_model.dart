@@ -1,4 +1,4 @@
-import 'package:products_app/products/domain/entities/dimensions.dart';
+import 'package:products_app/products/domain/entities/products/dimensions.dart';
 
 class DimensionsModel {
     final double width;

@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import 'package:products_app/core/blocs/internet_checker/internet_checker_bloc.dart';
 import 'package:products_app/core/injector/injector.dart';
-import 'package:products_app/products/domain/usecases/get_products_use_case.dart';
 import 'package:products_app/products/presentation/cubits/products_page/products_page_cubit.dart';
 import 'package:products_app/products/presentation/views/products_view.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
+  const ProductsPage({super.key, this.categorySlug});
 
   static const name = 'Products';
   static const path = '/products';
+  final String? categorySlug;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ProductsPageCubit(
-        getProductsUseCase: GetProductsUseCase(
-          productsRepository: sl(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ProductsPageCubit(
+            getCategoriesUseCase: sl(),
+            getProductsUseCase: sl(),
+            getProductsByCategoryUseCase: sl(),
+          )..init(
+              categorySlug: categorySlug,
+            ),
         ),
-      )..getProducts(),
+      ],
       child: BlocListener<InternetCheckerBloc, InternetCheckerState>(
-        //escuchar solo cuando el estado sea diferente al anterior
         listenWhen: (previous, current) {
           if (current is ConnectedState) {
             return previous is NotConnectedState;
@@ -33,9 +39,8 @@ class ProductsPage extends StatelessWidget {
           }
           return false;
         },
-
         listener: (context, state) {
-          if (state is ConnectedState){
+          if (state is ConnectedState) {
             context.read<ProductsPageCubit>().getProducts();
           }
           if (state is NotConnectedState) {
@@ -82,8 +87,81 @@ class ProductsPage extends StatelessWidget {
         },
         child: const Scaffold(
           appBar: _ProductsPageAppBar(),
+          drawer: _Drawer(),
           body: ProductsView(),
         ),
+      ),
+    );
+  }
+}
+
+class _Drawer extends StatelessWidget {
+  const _Drawer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              top: 32,
+              left: 16,
+              right: 16,
+            ),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Categories',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ),
+          const Divider(),
+          Expanded(
+            child: BlocBuilder<ProductsPageCubit, ProductsPageState>(
+              builder: (context, state) {
+                if (state.categoriesStatus == CategoriesListStatus.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state.categoriesStatus == CategoriesListStatus.error) {
+                  return Center(
+                    child: Text(
+                      state.errorMessage ?? 'Something went wrong',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  );
+                }
+                if (state.categoriesStatus == CategoriesListStatus.loaded) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 4,
+                    ),
+                    itemCount: state.categories!.length,
+                    itemBuilder: (context, index) {
+                      final category = state.categories![index];
+                      return ListTile(
+                        title: Text(category.name),
+                        onTap: () {
+                         context.push(
+                            '/products/${category.slug}',
+                          );
+                          context.pop();
+                        },
+                      );
+                    },
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -103,15 +181,20 @@ class _ProductsPageAppBar extends StatelessWidget
           bottom: Radius.circular(16),
         ),
       ),
-      title: Container(
-        margin: const EdgeInsets.only(
-          bottom: 12,
-        ),
-        child: Text(
-          'Buy Today',
-          style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+      title: InkWell(
+        onTap: () {
+          context.read<ProductsPageCubit>().getProducts();
+        },
+        child: Container(
+          margin: const EdgeInsets.only(
+            bottom: 12,
+          ),
+          child: Text(
+            'Buy Today',
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
         ),
       ),
     );
