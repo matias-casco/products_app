@@ -156,6 +156,12 @@ class _Drawer extends StatelessWidget {
                       return ListTile(
                         title: Text(category.name),
                         onTap: () {
+                          FirebaseAnalytics.instance.logEvent(
+                              name: 'category_tap_drawer', parameters: {
+                                category.name: category.name,
+                                'category_slug': category.slug,
+                                'category_index': index,
+                              });
                           context.push(
                             '/products/${category.slug}',
                           );
