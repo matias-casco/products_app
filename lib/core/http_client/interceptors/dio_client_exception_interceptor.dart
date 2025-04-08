@@ -13,7 +13,7 @@ class DioClientExceptionInterceptor extends Interceptor {
 
     await FirebaseCrashlytics.instance.recordError(
       err.runtimeType,
-      StackTrace.fromString(err.toString()),
+      err.stackTrace,
       reason: [
         'Error type: ${err.type}',
         'Endpoint: $method $url',
