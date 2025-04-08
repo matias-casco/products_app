@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -85,10 +86,17 @@ class ProductsPage extends StatelessWidget {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           }
         },
-        child: const Scaffold(
-          appBar: _ProductsPageAppBar(),
-          drawer: _Drawer(),
-          body: ProductsView(),
+        child: Scaffold(
+          appBar: const _ProductsPageAppBar(),
+          drawer: const _Drawer(),
+          onDrawerChanged: (hasChanged) async {
+            final name = hasChanged ? 'drawer_opened' : 'drawer_closed';
+
+            await FirebaseAnalytics.instance.logEvent(
+              name: name,
+            );
+          },
+          body: const ProductsView(),
         ),
       ),
     );
@@ -148,7 +156,7 @@ class _Drawer extends StatelessWidget {
                       return ListTile(
                         title: Text(category.name),
                         onTap: () {
-                         context.push(
+                          context.push(
                             '/products/${category.slug}',
                           );
                           context.pop();
@@ -183,7 +191,9 @@ class _ProductsPageAppBar extends StatelessWidget
       ),
       title: InkWell(
         onTap: () {
-          context.read<ProductsPageCubit>().getProducts();
+          context.go(
+            '${ProductsPage.path}/all',
+          );
         },
         child: Container(
           margin: const EdgeInsets.only(
