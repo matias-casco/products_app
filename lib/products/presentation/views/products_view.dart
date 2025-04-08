@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,6 +75,19 @@ class _ProductsBuilder extends StatelessWidget {
                   return ProductCard(
                     product: product,
                     onTap: () {
+                      FirebaseAnalytics.instance.logEvent(
+                        name: 'product_card_tap',
+                        parameters: {
+                          'product_id': product.id,
+                          'product_name': product.title,
+                          'product_price': product.price,
+                          'product_category': product.category,
+                          'product_availability_status':
+                              product.availabilityStatus,
+                          'product_brand': product.brand ?? 'N/A',
+                          'product_rating': product.rating,
+                        },
+                      );
                       context.push(
                         ProductDetailsPage.path,
                         extra: ProductDetailsExtra(details: product),
