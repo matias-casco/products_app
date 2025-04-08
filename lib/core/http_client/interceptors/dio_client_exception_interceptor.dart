@@ -43,67 +43,83 @@ class DioClientExceptionInterceptor extends Interceptor {
   ) async {
     switch (e.type) {
       case DioExceptionType.badCertificate:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
-          returnMessage: 'Error de certificado',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
+            returnMessage: 'Error de certificado',
+            requestOptions: e.requestOptions,
+          ),
         );
       case DioExceptionType.badResponse:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
-          returnMessage: 'Error en la respuesta',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
+            returnMessage: 'Error en la respuesta',
+            requestOptions: e.requestOptions,
+          ),
         );
       case DioExceptionType.cancel:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput: 'La solicitud fue cancelada.',
-          returnMessage: 'Consulta cancelada',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput: 'La solicitud fue cancelada.',
+            returnMessage: 'Consulta cancelada',
+            requestOptions: e.requestOptions,
+          ),
         );
       case DioExceptionType.connectionError:
-        handler.reject(HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
-          returnMessage: 'Error de conexión',
-          requestOptions: e.requestOptions,
-        ));
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
+            returnMessage: 'Error de conexión',
+            requestOptions: e.requestOptions,
+          ),
+        );
       case DioExceptionType.connectionTimeout:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'No es posible avanzar con esta solicitud debido a que se ha superado el tiempo de respuesta.',
-          returnMessage: 'Tiempo de conexión agotado',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'No es posible avanzar con esta solicitud debido a que se ha superado el tiempo de respuesta.',
+            returnMessage: 'Tiempo de conexión agotado',
+            requestOptions: e.requestOptions,
+          ),
         );
       case DioExceptionType.receiveTimeout:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'No es posible avanzar con la solicitud en este momento debido a que no se ha obtenido una respuesta.',
-          returnMessage: 'Tiempo de recepción agotado',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'No es posible avanzar con la solicitud en este momento debido a que no se ha obtenido una respuesta.',
+            returnMessage: 'Tiempo de recepción agotado',
+            requestOptions: e.requestOptions,
+          ),
         );
       case DioExceptionType.sendTimeout:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'No es posible avanzar con esta solicitud debido a que se ha superado el tiempo de respuesta.',
-          returnMessage: 'Tiempo de envío agotado',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'No es posible avanzar con esta solicitud debido a que se ha superado el tiempo de respuesta.',
+            returnMessage: 'Tiempo de envío agotado',
+            requestOptions: e.requestOptions,
+          ),
         );
       case DioExceptionType.unknown:
-        throw HTTPClientException(
-          code: ErrorCode.unexpected,
-          readableOutput:
-              'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
-          returnMessage: 'Error desconocido',
-          requestOptions: e.requestOptions,
+        handler.reject(
+          HTTPClientException(
+            code: ErrorCode.unexpected,
+            readableOutput:
+                'Ocurrió un error y no es posible avanzar con la solicitud en este momento.',
+            returnMessage: 'Error desconocido',
+            requestOptions: e.requestOptions,
+          ),
         );
     }
   }
