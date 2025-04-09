@@ -25,7 +25,7 @@ class ProductsPageCubit extends Cubit<ProductsPageState> {
   final GetCategoriesUseCase _getCategoriesUseCase;
 
   Future<void> init({required String? categorySlug}) async {
-      await getCategories();
+    await getCategories();
 
     if (categorySlug == 'all') {
       getProducts();
@@ -130,14 +130,18 @@ class ProductsPageCubit extends Cubit<ProductsPageState> {
     emit(state.copyWith(categoriesStatus: CategoriesListStatus.loading));
     final result = await _getCategoriesUseCase(NoParams());
     result.fold(
-      (failure) => emit(state.copyWith(
-        categoriesStatus: CategoriesListStatus.error,
-        errorMessage: failure.message,
-      )),
-      (categories) => emit(state.copyWith(
-        categoriesStatus: CategoriesListStatus.loaded,
-        categories: categories,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          categoriesStatus: CategoriesListStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (success) => emit(
+        state.copyWith(
+          categoriesStatus: CategoriesListStatus.loaded,
+          categories: success.categories,
+        ),
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+// import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/material.dart';
 
 // import 'package:flutter_test/flutter_test.dart';
@@ -7,31 +8,34 @@
 // import 'package:network_image_mock/network_image_mock.dart';
 
 // import 'package:products_app/main.dart';
-// import 'package:products_app/products/data/models/products_model.dart';
-// import 'package:products_app/products/presentation/notifiers/products_page_notifier.dart';
+// import 'package:products_app/products/data/models/products/products_model.dart';
+// import 'package:products_app/products/presentation/cubits/products_page/products_page_cubit.dart';
 // import 'package:products_app/products/presentation/pages/product_details_page.dart';
 
 // import '../../data/products_json_mock.dart';
-
 // import 'products_page_test.mocks.dart';
 
 // @GenerateNiceMocks([
-//   MockSpec<ProductsPageNotifier>(as: #MockProductsPageNotifier)
+//   MockSpec<ProductsPageCubit>(as: #MockProductsPageCubit),
+//   MockSpec<FirebaseApp>(as: #MockFirebaseApp),
 // ]) // <-- Genera mocks con valores por defecto
 // void main() {
-//   late MockProductsPageNotifier mockNotifier;
+//   late MockProductsPageCubit mockProductsPageCubit;
 //   final sl = GetIt.instance;
 
 //   final mockProducts = ProductsModel.fromJson(productsJsonMock).toEntity();
 
 //   setUp(() async {
-//     mockNotifier = MockProductsPageNotifier();
+//     mockProductsPageCubit = MockProductsPageCubit();
 
 //     TestWidgetsFlutterBinding.ensureInitialized();
 
-//     mockNotifier = MockProductsPageNotifier();
 
-//     when(mockNotifier.productsState).thenReturn(
+//     when(Firebase.initializeApp()).thenAnswer(
+//       (_) async => MockFirebaseApp(),
+//     );
+
+//     when(mockProductsPageCubit.state).thenReturn(
 //       const ProductsPageState(
 //         status: ProductsPageStatus.initial,
 //         products: null,
@@ -39,18 +43,12 @@
 //       ),
 //     );
 
-//     if (!sl.isRegistered<ProductsPageNotifier>()) {
-//       sl.registerLazySingleton<ProductsPageNotifier>(() => mockNotifier);
-//     } else {
-//       sl.unregister<ProductsPageNotifier>();
-//       sl.registerLazySingleton<ProductsPageNotifier>(() => mockNotifier);
-//     }
-//   });
-
-//   tearDown(() {
-//     if (sl.isRegistered<ProductsPageNotifier>()) {
-//       sl.unregister<ProductsPageNotifier>();
-//     }
+//     // if (!sl.isRegistered<ProductsPageNotifier>()) {
+//     //   sl.registerLazySingleton<ProductsPageNotifier>(() => mockProductsPageCubit);
+//     // } else {
+//     //   sl.unregister<ProductsPageNotifier>();
+//     //   sl.registerLazySingleton<ProductsPageNotifier>(() => mockProductsPageCubit);
+//     // }
 //   });
 
 //   Widget createTestWidget() {
@@ -59,7 +57,7 @@
 
 //   group('ProductPage', () {
 //     testWidgets('Shows Buy Today text in AppBar', (tester) async {
-//       when(mockNotifier.productsState).thenReturn(
+//       when(mockProductsPageCubit.state).thenReturn(
 //         const ProductsPageState(
 //           status: ProductsPageStatus.loaded,
 //           products: null,
@@ -80,7 +78,7 @@
 
 //     testWidgets('Shows a CircleProgressIndicator when loading page',
 //         (tester) async {
-//       when(mockNotifier.productsState).thenReturn(
+//       when(mockProductsPageCubit.state).thenReturn(
 //         const ProductsPageState(
 //           status: ProductsPageStatus.loading,
 //           products: null,
@@ -95,7 +93,7 @@
 //     });
 
 //     testWidgets('Shows an error message when loading fails', (tester) async {
-//       when(mockNotifier.productsState).thenReturn(
+//       when(mockProductsPageCubit.state).thenReturn(
 //         const ProductsPageState(
 //           status: ProductsPageStatus.error,
 //           products: null,
@@ -111,7 +109,7 @@
 //     });
 
 //     testWidgets('Shows products when loaded', (tester) async {
-//       when(mockNotifier.productsState).thenReturn(
+//       when(mockProductsPageCubit.state).thenReturn(
 //         ProductsPageState(
 //           status: ProductsPageStatus.loaded,
 //           products: mockProducts,
@@ -132,7 +130,7 @@
 
 //     testWidgets('Navigate to ProductDetailsPage when tapping a product',
 //         (tester) async {
-//       when(mockNotifier.productsState).thenReturn(
+//       when(mockProductsPageCubit.state).thenReturn(
 //         ProductsPageState(
 //           status: ProductsPageStatus.loaded,
 //           products: mockProducts,
