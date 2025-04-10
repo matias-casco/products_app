@@ -7,7 +7,6 @@ import 'package:products_app/core/errors/failures.dart';
 import 'package:products_app/core/usecases/use_case.dart';
 import 'package:products_app/products/data/models/categories/categories_model.dart';
 import 'package:products_app/products/domain/entities/categories/categories.dart';
-import 'package:products_app/products/domain/entities/products/products.dart';
 import 'package:products_app/products/domain/repositories/products_repository.dart';
 import 'package:products_app/products/domain/usecases/get_categories_use_case.dart';
 
