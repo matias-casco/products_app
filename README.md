@@ -132,6 +132,7 @@ getCategories:
 ✅ Should load a Categories entity and set CategoriesListStatus.loaded
 
 ✅ Should return a failure when an exception occurs and set CategoriesListStatus.error
+
 ---
 
 ## 📥 Installation & Setup  
