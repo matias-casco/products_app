@@ -45,27 +45,93 @@ The app is built using the following technologies:
 
 ## 🧪 Tests  
 
-Unit tests were conducted to ensure stable and expected behavior of the application.  
+### Test Summary
+All tests passed successfully with a total of 31 tests executed across different application components.
+TOTAL: 31/31 tests passed
 
-### ✅ **Test Results**  
+### Test Structure
+1. Datasources
+DioHttpClientImpl
+2/2 tests passed
 
-| **#** | **Test Case** | **Description** | **Result** |
-|---|----------------------|---------------|-------------|
-| 1️⃣ | `DioHttpClientImpl` - GET request success | Performs a GET request and returns a product model. | ✅ Passed |
-| 2️⃣ | `DioHttpClientImpl` - Error handling | Handles errors when performing a GET request. | ✅ Passed |
-| 3️⃣ | `ProductsDatasourceImpl` - GET request success | Performs a GET request and returns a product model. | ✅ Passed |
-| 4️⃣ | `ProductsDatasourceImpl` - Error handling | Handles errors when performing a GET request. | ✅ Passed |
-| 5️⃣ | `ProductsRepositoryImpl` - Successful response | Returns `Right<Failure, Products>` when fetching products. | ✅ Passed |
-| 6️⃣ | `ProductsRepositoryImpl` - Error handling | Returns `Left<Failure, Products>` when an error occurs. | ✅ Passed |
-| 7️⃣ | `GetProductsUseCase` - Successful execution | Returns `Right<Failure, Products>` when called successfully. | ✅ Passed |
-| 8️⃣ | `ProductsPageNotifier` - Loads product data | Loads a product entity correctly. | ✅ Passed |
-| 9️⃣ | `ProductsPageNotifier` - Handles errors | Returns a failure when an exception occurs. | ✅ Passed |
-| 🔟 | `ProductPage` - Displays AppBar text | Shows "Buy Today" in the AppBar. | ✅ Passed |
-| 1️⃣1️⃣ | `ProductPage` - Shows loading indicator | Displays `CircularProgressIndicator` while loading. | ✅ Passed |
-| 1️⃣2️⃣ | `ProductPage` - Error message | Displays an error message when loading fails. | ✅ Passed |
-| 1️⃣3️⃣ | `ProductPage` - Shows products | Displays product list when data is loaded. | ✅ Passed |
-| 1️⃣4️⃣ | `ProductPage` - Navigation to details | Navigates to `ProductDetailsPage` when tapping a product. | ✅ Passed |
+✅ should perform a GET request and return a Product model
 
+✅ should handle errors when performing a GET request
+
+ProductsDatasourceImpl
+6/6 tests passed
+
+getProducts:
+
+✅ Should perform a GET request and return a products model
+
+✅ Should handle errors when performing a GET request
+
+getCategories:
+
+✅ Should perform a GET request and return a CategoriesModel
+
+✅ Should handle errors when performing a GET request
+
+getProductsByCategory:
+
+✅ Should perform a GET request and return a products model
+
+✅ Should handle errors when performing a GET request
+
+2. Repositories
+ProductsRepositoryImpl
+6/6 tests passed
+
+getProducts:
+
+✅ Should return Right<Failure, Products>
+
+✅ Should return Left<Failure, Products> when an exception occurs
+
+getCategories:
+
+✅ Should return Right<Failure, Categories>
+
+✅ Should return Left<Failure, Categories> when an exception occurs
+
+getProductsByCategory:
+
+✅ Should return Right<Failure, Products>
+
+✅ Should return Left<Failure, Products> when an exception occurs
+
+3. Use Cases
+GetCategoriesUseCase
+1/1 test passed
+
+✅ Should return Right<Failure, Categories> when calling successfully
+
+GetProductsByCategoryUseCase
+1/1 test passed
+
+✅ Should return Right<Failure, Products> when calling successfully
+
+GetProductsUseCase
+1/1 test passed
+
+✅ Should return Right<Failure, Products> when calling successfully
+
+4. Presentation (Cubits)
+ProductsPageCubit
+4/4 tests passed
+
+getProducts:
+
+✅ Should load a Products entity and set ProductPageStatus.loaded
+
+✅ Should return a failure when an exception occurs and set ProductPageStatus.error
+
+getCategories:
+
+✅ Should load a Categories entity and set CategoriesListStatus.loaded
+
+✅ Should return a failure when an exception occurs and set CategoriesListStatus.error
 ---
 
 ## 📥 Installation & Setup  
