@@ -1,10 +1,10 @@
 import 'package:products_app/core/http_client/http_client_interface.dart';
-import 'package:products_app/products/data/models/categories/category_model.dart';
+import 'package:products_app/products/data/models/categories/categories_model.dart';
 import 'package:products_app/products/data/models/products/products_model.dart';
 
 abstract class ProductsDatasource {
   Future<ProductsModel> getProducts();
-  Future<List<CategoryModel>> getCategories();
+  Future<CategoriesModel> getCategories();
   Future<ProductsModel> getProductsByCategory({required String slug});
 }
 
@@ -16,27 +16,22 @@ class ProductsDatasourceImpl implements ProductsDatasource {
 
   @override
   Future<ProductsModel> getProducts() async {
-    return await _client.getRequest<ProductsModel>(
+    return await _client.getRequest(
       '/products?limit=24',
       converter: (json) => ProductsModel.fromJson(json),
     );
   }
 
   @override
-  Future<List<CategoryModel>> getCategories() async {
-    return await _client.getRequest<List<CategoryModel>>('/products/categories',
-        converter: (json) {
-      final List<CategoryModel> categories = [];
-      for (final item in json) {
-        categories.add(CategoryModel.fromJson(item));
-      }
-      return categories;
+  Future<CategoriesModel> getCategories() async {
+    return await _client.getRequest('/products/categories', converter: (json) {
+      return CategoriesModel.fromJson(json);
     });
   }
 
   @override
   Future<ProductsModel> getProductsByCategory({required String slug}) async {
-    return await _client.getRequest<ProductsModel>(
+    return await _client.getRequest(
       '/products/category/$slug',
       converter: (json) => ProductsModel.fromJson(json),
     );
