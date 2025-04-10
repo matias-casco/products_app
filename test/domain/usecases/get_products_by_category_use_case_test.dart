@@ -40,7 +40,7 @@ void main() {
         () async {
       // Arrange
       when(mockProductsModel.toEntity()).thenReturn(mockProductsEntity);
-      when(mockProductsRepository.getProducts())
+      when(mockProductsRepository.getProductsByCategory(slug: 'slug'))
           .thenAnswer((_) async => Right(mockProductsEntity));
 
       // Act
