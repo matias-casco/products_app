@@ -114,7 +114,7 @@ void main() {
 
     test('getCategories should return a failure when an exception occurs and set CategoriesListStatus.error', () async {
       // Arrange
-      when(mockGetProductsUseCase(NoParams())).thenAnswer((_) async =>
+      when(mockGetCategoriesUseCase(NoParams())).thenAnswer((_) async =>
           const Left(ServerFailure(
               message: 'An error occurred while fetching products')));
 
