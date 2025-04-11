@@ -50,5 +50,17 @@ void main() {
       expect(result, isA<Right<Failure, Products>>());
     });
 
+    test('should return a Left<Failure, Products> when an error occurs in repository', () async {
+      // Arrange
+      when(mockProductsRepository.getProducts())
+          .thenAnswer((_) async => const Left(ServerFailure()));
+
+      // Act
+      final result = await getProductsUseCase(NoParams());
+
+      // Assert
+      expect(result, isA<Left<Failure, Products>>());
+    });
+
   });
 }

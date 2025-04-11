@@ -51,5 +51,18 @@ void main() {
       expect(result, isA<Right<Failure, Categories>>());
     });
 
+  test('should return a Left<Failure, Categories> when a error occurs in repository', () async {
+      // Arrange
+      when(mockProductsRepository.getCategories())
+          .thenAnswer((_) async => const Left(ServerFailure()));
+
+      // Act
+      final result = await getCategoriesUseCase(NoParams());
+
+      // Assert
+      expect(result, isA<Left<Failure, Categories>>());
+    });
+
+
   });
 }
