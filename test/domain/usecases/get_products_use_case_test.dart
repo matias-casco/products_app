@@ -18,26 +18,23 @@ import 'get_products_use_case_test.mocks.dart';
   MockSpec<Products>(as: #MockProducts),
 ])
 void main() {
-  late MockProductsModel mockProductsModel;
-  late MockProducts mockProductsEntity;
-
-  setUpAll(() {
-    mockProductsModel = MockProductsModel();
-    mockProductsEntity = MockProducts();
-  });
-
   group('GetProductsUseCase', () {
+    late MockProductsModel mockProductsModel;
+    late MockProducts mockProductsEntity;
     late MockProductsRepository mockProductsRepository;
     late GetProductsUseCase getProductsUseCase;
 
     setUp(() {
+      mockProductsModel = MockProductsModel();
+      mockProductsEntity = MockProducts();
       mockProductsRepository = MockProductsRepository();
       getProductsUseCase =
           GetProductsUseCase(productsRepository: mockProductsRepository);
       provideDummy<Either<Failure, Products>>(Right(mockProductsEntity));
     });
 
-    test('should return a Right<Failure, Products> when calling succesfully', () async {
+    test('should return a Right<Failure, Products> when calling succesfully',
+        () async {
       // Arrange
       when(mockProductsModel.toEntity()).thenReturn(mockProductsEntity);
       when(mockProductsRepository.getProducts())
@@ -50,7 +47,9 @@ void main() {
       expect(result, isA<Right<Failure, Products>>());
     });
 
-    test('should return a Left<Failure, Products> when an error occurs in repository', () async {
+    test(
+        'should return a Left<Failure, Products> when an error occurs in repository',
+        () async {
       // Arrange
       when(mockProductsRepository.getProducts())
           .thenAnswer((_) async => const Left(ServerFailure()));
@@ -61,6 +60,5 @@ void main() {
       // Assert
       expect(result, isA<Left<Failure, Products>>());
     });
-
   });
 }

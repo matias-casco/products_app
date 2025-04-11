@@ -17,23 +17,22 @@ import 'get_products_by_category_use_case_test.mocks.dart';
   MockSpec<Products>(as: #MockProducts),
 ])
 void main() {
-  late MockProductsModel mockProductsModel;
-  late MockProducts mockProductsEntity;
-
-  setUpAll(() {
-    mockProductsModel = MockProductsModel();
-    mockProductsEntity = MockProducts();
-  });
 
   group('GetProductsByCategoryUseCase', () {
+    late MockProductsModel mockProductsModel;
+    late MockProducts mockProductsEntity;
     late MockProductsRepository mockProductsRepository;
     late GetProductsByCategoryUseCase getProductsByCategoryUseCase;
 
     setUp(() {
+      mockProductsModel = MockProductsModel();
+      mockProductsEntity = MockProducts();
       mockProductsRepository = MockProductsRepository();
       getProductsByCategoryUseCase = GetProductsByCategoryUseCase(
           productsRepository: mockProductsRepository);
+
       provideDummy<Either<Failure, Products>>(Right(mockProductsEntity));
+
     });
 
     test('should return a Right<Failure, Products> when calling succesfully',
@@ -52,7 +51,9 @@ void main() {
       expect(result, isA<Right<Failure, Products>>());
     });
 
-    test('should return a Left<Failure, Products> when an error occurs in repositorys', () async {
+    test(
+        'should return a Left<Failure, Products> when an error occurs in repositorys',
+        () async {
       // Arrange
       when(mockProductsRepository.getProductsByCategory(slug: 'slug'))
           .thenAnswer((_) async => const Left(ServerFailure()));

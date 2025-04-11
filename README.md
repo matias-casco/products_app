@@ -23,7 +23,7 @@
 - Navigates to **ProductDetailsPage** when selecting a product.  
 
 ### 🔹 **State Management & Error Handling**
-- Uses `ValueListenableBuilder` for real-time UI updates.  
+- Uses `blocs` and `cubits` for real-time UI updates.  
 - **Loading indicators** (`CircularProgressIndicator`) when fetching data.  
 - Shows **error messages** with retry options in case of failure.
 
@@ -47,19 +47,18 @@ The app is built using the following technologies:
 
 ### Test Summary
 All tests passed successfully with a total of 31 tests executed across different application components.
-TOTAL: 31/31 tests passed
+TOTAL: 24/24 tests passed
 
 ### Test Structure
-1. Datasources
-DioHttpClientImpl
-2/2 tests passed
+1. Http Client
+DioHttpClientImpl - 2/2 tests passed
 
 ✅ should perform a GET request and return a Product model
 
 ✅ should handle errors when performing a GET request
 
-ProductsDatasourceImpl
-6/6 tests passed
+2. Datasources
+ProductsDatasourceImpl - 6/6 tests passed
 
 getProducts:
 
@@ -79,9 +78,8 @@ getProductsByCategory:
 
 ✅ Should handle errors when performing a GET request
 
-2. Repositories
-ProductsRepositoryImpl
-6/6 tests passed
+3. Repositories
+ProductsRepositoryImpl - 6/6 tests passed
 
 getProducts:
 
@@ -102,24 +100,26 @@ getProductsByCategory:
 ✅ Should return Left<Failure, Products> when an exception occurs
 
 3. Use Cases
-GetCategoriesUseCase
-1/1 test passed
+GetCategoriesUseCase - 2/2 test passed
 
 ✅ Should return Right<Failure, Categories> when calling successfully
 
-GetProductsByCategoryUseCase
-1/1 test passed
+✅ Should return Left<Failure, Products> when an exception occurs
+
+GetProductsByCategoryUseCase - 2/2 test passed
 
 ✅ Should return Right<Failure, Products> when calling successfully
 
-GetProductsUseCase
-1/1 test passed
+✅ Should return Left<Failure, Products> when an exception occurs
+
+GetProductsUseCase - 2/2 test passed
 
 ✅ Should return Right<Failure, Products> when calling successfully
+
+✅ Should return Left<Failure, Products> when an exception occurs
 
 4. Presentation (Cubits)
-ProductsPageCubit
-4/4 tests passed
+ProductsPageCubit - 4/4 tests passed
 
 getProducts:
 

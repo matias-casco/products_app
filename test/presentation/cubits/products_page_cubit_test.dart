@@ -20,8 +20,6 @@ import '../../data/products_json_mock.dart';
 
 import 'products_page_cubit_test.mocks.dart';
 
-
-
 @GenerateNiceMocks([
   MockSpec<GetProductsUseCase>(as: #MockGetProductsUseCase),
   MockSpec<GetCategoriesUseCase>(as: #MockGetCategoriesUseCase),
@@ -32,18 +30,11 @@ import 'products_page_cubit_test.mocks.dart';
   MockSpec<Categories>(as: #MockCategories),
 ])
 void main() {
-  late MockProductsModel mockProductsModel;
-  late MockProducts mockProductsEntity;
-  late MockCategoriesModel mockCategoriesModel;
-  late MockCategories mockCategoriesEntity;
-
-  setUpAll(() {
-    mockProductsModel = MockProductsModel();
-    mockProductsEntity = MockProducts();
-    mockCategoriesModel = MockCategoriesModel();
-    mockCategoriesEntity = MockCategories();
-  });
   group('Products Page Cubit', () {
+    late MockProductsModel mockProductsModel;
+    late MockProducts mockProductsEntity;
+    late MockCategoriesModel mockCategoriesModel;
+    late MockCategories mockCategoriesEntity;
     late MockGetProductsUseCase mockGetProductsUseCase;
     late MockGetCategoriesUseCase mockGetCategoriesUseCase;
     late MockGetProductsByCategoryUseCase mockGetProductsByCategoryUseCase;
@@ -52,36 +43,42 @@ void main() {
     final dynamic myCategoriesJsonMock = categoriesJsonMock;
 
     setUp(() {
+      mockProductsModel = MockProductsModel();
+      mockProductsEntity = MockProducts();
+      mockCategoriesModel = MockCategoriesModel();
+      mockCategoriesEntity = MockCategories();
       mockGetProductsUseCase = MockGetProductsUseCase();
       mockGetCategoriesUseCase = MockGetCategoriesUseCase();
       mockGetProductsByCategoryUseCase = MockGetProductsByCategoryUseCase();
-      productsPageCubit =
-          ProductsPageCubit(getProductsUseCase: mockGetProductsUseCase,
-          getCategoriesUseCase: mockGetCategoriesUseCase,
-          getProductsByCategoryUseCase: mockGetProductsByCategoryUseCase,
-          );
+      productsPageCubit = ProductsPageCubit(
+        getProductsUseCase: mockGetProductsUseCase,
+        getCategoriesUseCase: mockGetCategoriesUseCase,
+        getProductsByCategoryUseCase: mockGetProductsByCategoryUseCase,
+      );
       provideDummy<Either<Failure, Products>>(Right(mockProductsEntity));
       provideDummy<Either<Failure, Categories>>(Right(mockCategoriesEntity));
     });
 
-    test('getProducts should load a Products entity and set ProductPageStatus.loaded', () async {
+    test(
+        'getProducts should load a Products entity and set ProductPageStatus.loaded',
+        () async {
       // Arrange
       when(mockProductsModel.toEntity()).thenReturn(mockProductsEntity);
-      when(mockGetProductsUseCase(NoParams())).thenAnswer(
-          (_) async => Right(ProductsModel.fromJson(myProductsJsonMock).toEntity()));
+      when(mockGetProductsUseCase(NoParams())).thenAnswer((_) async =>
+          Right(ProductsModel.fromJson(myProductsJsonMock).toEntity()));
 
       // Act
       await productsPageCubit.getProducts();
 
       // Assert
-      expect(
-          productsPageCubit.state.products, isA<Products>());
+      expect(productsPageCubit.state.products, isA<Products>());
 
-      expect(productsPageCubit.state.status,
-          ProductsPageStatus.loaded);
+      expect(productsPageCubit.state.status, ProductsPageStatus.loaded);
     });
 
-    test('getProducts should return a failure when an exception occurs and set ProductPageStatus.error', () async {
+    test(
+        'getProducts should return a failure when an exception occurs and set ProductPageStatus.error',
+        () async {
       // Arrange
       when(mockGetProductsUseCase(NoParams())).thenAnswer((_) async =>
           const Left(ServerFailure(
@@ -91,28 +88,30 @@ void main() {
       await productsPageCubit.getProducts();
 
       // Assert
-      expect(productsPageCubit.state.status,
-          ProductsPageStatus.error);
+      expect(productsPageCubit.state.status, ProductsPageStatus.error);
     });
 
-     test('getCategories should load a Categories entity and set CategoriesListStatus.loaded', () async {
+    test(
+        'getCategories should load a Categories entity and set CategoriesListStatus.loaded',
+        () async {
       // Arrange
       when(mockCategoriesModel.toEntity()).thenReturn(mockCategoriesEntity);
-      when(mockGetCategoriesUseCase(NoParams())).thenAnswer(
-          (_) async => Right(CategoriesModel.fromJson(myCategoriesJsonMock).toEntity()));
+      when(mockGetCategoriesUseCase(NoParams())).thenAnswer((_) async =>
+          Right(CategoriesModel.fromJson(myCategoriesJsonMock).toEntity()));
 
       // Act
       await productsPageCubit.getCategories();
 
       // Assert
-      expect(
-          productsPageCubit.state.categories, isA<List<Category>>());
+      expect(productsPageCubit.state.categories, isA<List<Category>>());
 
       expect(productsPageCubit.state.categoriesStatus,
           CategoriesListStatus.loaded);
     });
 
-    test('getCategories should return a failure when an exception occurs and set CategoriesListStatus.error', () async {
+    test(
+        'getCategories should return a failure when an exception occurs and set CategoriesListStatus.error',
+        () async {
       // Arrange
       when(mockGetCategoriesUseCase(NoParams())).thenAnswer((_) async =>
           const Left(ServerFailure(
@@ -122,13 +121,12 @@ void main() {
       await productsPageCubit.getCategories();
 
       // Assert
-      expect(productsPageCubit.state.categoriesStatus,
-          CategoriesListStatus.error);
+      expect(
+          productsPageCubit.state.categoriesStatus, CategoriesListStatus.error);
     });
 
     tearDown(() {
       productsPageCubit.close();
     });
   });
-  
 }

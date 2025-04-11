@@ -19,26 +19,24 @@ import 'products_repository_impl_test.mocks.dart';
   MockSpec<CategoriesModel>(as: #MockCategoriesModel),
 ])
 void main() {
-  late MockProductsModel mockProductsModel;
-  late MockCategoriesModel mockCategoriesModel;
-
-  setUpAll(() {
-    mockProductsModel = MockProductsModel();
-    mockCategoriesModel = MockCategoriesModel();
-  });
-
   group('ProductsRepositoryImpl', () {
+    
+    late MockProductsModel mockProductsModel;
+    late MockCategoriesModel mockCategoriesModel;
     late ProductsRepositoryImpl productsRepositoryImpl;
     late MockProductsDatasource mockProductsDatasource;
 
     setUp(() {
+      mockProductsModel = MockProductsModel();
+      mockCategoriesModel = MockCategoriesModel();
       mockProductsDatasource = MockProductsDatasource();
       productsRepositoryImpl =
           ProductsRepositoryImpl(productsDatasource: mockProductsDatasource);
       // provideDummy<Either<Failure, Products>>(Right(mockProductsEntity));
     });
 
-    test('getProducts method should return a Right<Failure, Products>', () async {
+    test('getProducts method should return a Right<Failure, Products>',
+        () async {
       // Arrange
       when(mockProductsDatasource.getProducts())
           .thenAnswer((_) async => mockProductsModel);
@@ -50,7 +48,9 @@ void main() {
       expect(result, isA<Right<Failure, Products>>());
     });
 
-    test('getProducts should return a Left<Failure, Products> when an exception occurs', () async {
+    test(
+        'getProducts should return a Left<Failure, Products> when an exception occurs',
+        () async {
       // Arrange
       when(mockProductsDatasource.getProducts()).thenThrow(Exception());
 
@@ -61,7 +61,8 @@ void main() {
       expect(result, isA<Left<Failure, Products>>());
     });
 
-    test('getCategories method should return a Right<Failure, Categories>', () async {
+    test('getCategories method should return a Right<Failure, Categories>',
+        () async {
       // Arrange
       when(mockProductsDatasource.getCategories())
           .thenAnswer((_) async => mockCategoriesModel);
@@ -73,7 +74,9 @@ void main() {
       expect(result, isA<Right<Failure, Categories>>());
     });
 
-    test('getCategories should return a Left<Failure, Categories> when an exception occurs', () async {
+    test(
+        'getCategories should return a Left<Failure, Categories> when an exception occurs',
+        () async {
       // Arrange
       when(mockProductsDatasource.getCategories()).thenThrow(Exception());
 
@@ -84,30 +87,34 @@ void main() {
       expect(result, isA<Left<Failure, Categories>>());
     });
 
-     test('getProductsByCategory method should return a Right<Failure, Products>', () async {
+    test(
+        'getProductsByCategory method should return a Right<Failure, Products>',
+        () async {
       // Arrange
       when(mockProductsDatasource.getProductsByCategory(slug: 'slug'))
           .thenAnswer((_) async => mockProductsModel);
 
       // Act
-      final result = await productsRepositoryImpl.getProductsByCategory(slug: 'slug');
+      final result =
+          await productsRepositoryImpl.getProductsByCategory(slug: 'slug');
 
       // Assert
       expect(result, isA<Right<Failure, Products>>());
     });
 
-    test('getProductsByCategory should return a Left<Failure, Products> when an exception occurs', () async {
+    test(
+        'getProductsByCategory should return a Left<Failure, Products> when an exception occurs',
+        () async {
       // Arrange
-      when(mockProductsDatasource.getProductsByCategory(slug: 'slug')).thenThrow(Exception());
+      when(mockProductsDatasource.getProductsByCategory(slug: 'slug'))
+          .thenThrow(Exception());
 
       // Act
-      final result = await productsRepositoryImpl.getProductsByCategory(slug: 'slug');
+      final result =
+          await productsRepositoryImpl.getProductsByCategory(slug: 'slug');
 
       // Assert
       expect(result, isA<Left<Failure, Products>>());
     });
-
-
   });
-
 }

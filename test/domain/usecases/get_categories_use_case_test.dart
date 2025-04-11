@@ -12,33 +12,31 @@ import 'package:products_app/products/domain/usecases/get_categories_use_case.da
 
 import 'get_categories_use_case_test.mocks.dart';
 
-
 @GenerateNiceMocks([
   MockSpec<ProductsRepository>(as: #MockProductsRepository),
   MockSpec<CategoriesModel>(as: #MockCategoriesModel),
   MockSpec<Categories>(as: #MockCategories),
 ])
 void main() {
-  late MockCategoriesModel mockCategoriesModel;
-  late MockCategories mockCategoriesEntity;
-
-  setUpAll(() {
-    mockCategoriesModel = MockCategoriesModel();
-    mockCategoriesEntity = MockCategories();
-  });
 
   group('getCategoriesUseCase', () {
+
+    late MockCategoriesModel mockCategoriesModel;
+    late MockCategories mockCategoriesEntity;
     late MockProductsRepository mockProductsRepository;
     late GetCategoriesUseCase getCategoriesUseCase;
 
     setUp(() {
+      mockCategoriesModel = MockCategoriesModel();
+      mockCategoriesEntity = MockCategories();
       mockProductsRepository = MockProductsRepository();
       getCategoriesUseCase =
           GetCategoriesUseCase(productsRepository: mockProductsRepository);
       provideDummy<Either<Failure, Categories>>(Right(mockCategoriesEntity));
     });
 
-    test('should return a Right<Failure, Categories> when calling succesfully', () async {
+    test('should return a Right<Failure, Categories> when calling succesfully',
+        () async {
       // Arrange
       when(mockCategoriesModel.toEntity()).thenReturn(mockCategoriesEntity);
       when(mockProductsRepository.getCategories())
@@ -51,7 +49,9 @@ void main() {
       expect(result, isA<Right<Failure, Categories>>());
     });
 
-  test('should return a Left<Failure, Categories> when a error occurs in repository', () async {
+    test(
+        'should return a Left<Failure, Categories> when a error occurs in repository',
+        () async {
       // Arrange
       when(mockProductsRepository.getCategories())
           .thenAnswer((_) async => const Left(ServerFailure()));
@@ -62,7 +62,5 @@ void main() {
       // Assert
       expect(result, isA<Left<Failure, Categories>>());
     });
-
-
   });
 }
