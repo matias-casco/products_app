@@ -46,94 +46,47 @@ The app is built using the following technologies:
 ## 🧪 Tests  
 
 ### Test Summary
-All tests passed successfully with a total of 31 tests executed across different application components.
+All tests passed successfully with a total of 24 tests executed across different application components.
 TOTAL: 24/24 tests passed
 
 ### Test Structure
-1. Http Client
-DioHttpClientImpl - 2/2 tests passed
 
-✅ should perform a GET request and return a Product model
+### 1. Http Client
 
-✅ should handle errors when performing a GET request
+| Class              | Tests Passed | Method                    | Description                                                                 |
+|-------------------|--------------|---------------------------|-----------------------------------------------------------------------------|
+| DioHttpClientImpl | 2/2          | getRequest&lt;ProductsModel&gt; | ✅ should perform a GET request and return a Product model<br>✅ should handle errors when performing a GET request |
 
-2. Datasources
-ProductsDatasourceImpl - 6/6 tests passed
+### 2. Datasources
 
-getProducts:
+| Class                    | Tests Passed | Method               | Description                                                                 |
+|-------------------------|--------------|----------------------|-----------------------------------------------------------------------------|
+| ProductsDatasourceImpl  | 6/6          | getProducts          | ✅ Should perform a GET request and return a products model<br>✅ Should handle errors when performing a GET request |
+|                         |              | getCategories        | ✅ Should perform a GET request and return a CategoriesModel<br>✅ Should handle errors when performing a GET request |
+|                         |              | getProductsByCategory| ✅ Should perform a GET request and return a products model<br>✅ Should handle errors when performing a GET request |
 
-✅ Should perform a GET request and return a products model
+### 3. Repositories
 
-✅ Should handle errors when performing a GET request
+| Class                  | Tests Passed | Method               | Description                                                                 |
+|-----------------------|--------------|----------------------|-----------------------------------------------------------------------------|
+| ProductsRepositoryImpl| 6/6          | getProducts          | ✅ Should return Right&lt;Failure, Products&gt;<br>✅ Should return Left&lt;Failure, Products&gt; when an exception occurs |
+|                       |              | getCategories        | ✅ Should return Right&lt;Failure, Categories&gt;<br>✅ Should return Left&lt;Failure, Categories&gt; when an exception occurs |
+|                       |              | getProductsByCategory| ✅ Should return Right&lt;Failure, Products&gt;<br>✅ Should return Left&lt;Failure, Products&gt; when an exception occurs |
 
-getCategories:
+### 4. Use Cases
 
-✅ Should perform a GET request and return a CategoriesModel
+| Use Case                        | Tests Passed | Description                                                                 |
+|--------------------------------|--------------|-----------------------------------------------------------------------------|
+| GetCategoriesUseCase           | 2/2          | ✅ Should return Right&lt;Failure, Categories&gt; when calling successfully<br>✅ Should return Left&lt;Failure, Products&gt; when an exception occurs |
+| GetProductsByCategoryUseCase   | 2/2          | ✅ Should return Right&lt;Failure, Products&gt; when calling successfully<br>✅ Should return Left&lt;Failure, Products&gt; when an exception occurs |
+| GetProductsUseCase             | 2/2          | ✅ Should return Right&lt;Failure, Products&gt; when calling successfully<br>✅ Should return Left&lt;Failure, Products&gt; when an exception occurs |
 
-✅ Should handle errors when performing a GET request
+### 5. Presentation (Cubits)
 
-getProductsByCategory:
-
-✅ Should perform a GET request and return a products model
-
-✅ Should handle errors when performing a GET request
-
-3. Repositories
-ProductsRepositoryImpl - 6/6 tests passed
-
-getProducts:
-
-✅ Should return Right<Failure, Products>
-
-✅ Should return Left<Failure, Products> when an exception occurs
-
-getCategories:
-
-✅ Should return Right<Failure, Categories>
-
-✅ Should return Left<Failure, Categories> when an exception occurs
-
-getProductsByCategory:
-
-✅ Should return Right<Failure, Products>
-
-✅ Should return Left<Failure, Products> when an exception occurs
-
-3. Use Cases
-GetCategoriesUseCase - 2/2 test passed
-
-✅ Should return Right<Failure, Categories> when calling successfully
-
-✅ Should return Left<Failure, Products> when an exception occurs
-
-GetProductsByCategoryUseCase - 2/2 test passed
-
-✅ Should return Right<Failure, Products> when calling successfully
-
-✅ Should return Left<Failure, Products> when an exception occurs
-
-GetProductsUseCase - 2/2 test passed
-
-✅ Should return Right<Failure, Products> when calling successfully
-
-✅ Should return Left<Failure, Products> when an exception occurs
-
-4. Presentation (Cubits)
-ProductsPageCubit - 4/4 tests passed
-
-getProducts:
-
-✅ Should load a Products entity and set ProductPageStatus.loaded
-
-✅ Should return a failure when an exception occurs and set ProductPageStatus.error
-
-getCategories:
-
-✅ Should load a Categories entity and set CategoriesListStatus.loaded
-
-✅ Should return a failure when an exception occurs and set CategoriesListStatus.error
-
----
+| Cubit              | Tests Passed | Method        | Description                                                                 |
+|--------------------|--------------|---------------|-----------------------------------------------------------------------------|
+| ProductsPageCubit  | 4/4          | getProducts   | ✅ Should load a Products entity and set ProductPageStatus.loaded<br>✅ Should return a failure when an exception occurs and set ProductPageStatus.error |
+|                    |              | getCategories | ✅ Should load a Categories entity and set CategoriesListStatus.loaded<br>✅ Should return a failure when an exception occurs and set CategoriesListStatus.error |
 
 ## 📥 Installation & Setup  
 
