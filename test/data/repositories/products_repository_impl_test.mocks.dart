@@ -62,14 +62,26 @@ class _FakeCategories_3 extends _i1.SmartFake implements _i5.Categories {
 class MockProductsDatasource extends _i1.Mock
     implements _i6.ProductsDatasource {
   @override
-  _i7.Future<_i2.ProductsModel> getProducts() =>
+  _i7.Future<_i2.ProductsModel> getProducts({int? limit = 24, int? skip = 0}) =>
       (super.noSuchMethod(
-            Invocation.method(#getProducts, []),
+            Invocation.method(#getProducts, [], {#limit: limit, #skip: skip}),
             returnValue: _i7.Future<_i2.ProductsModel>.value(
-              _FakeProductsModel_0(this, Invocation.method(#getProducts, [])),
+              _FakeProductsModel_0(
+                this,
+                Invocation.method(#getProducts, [], {
+                  #limit: limit,
+                  #skip: skip,
+                }),
+              ),
             ),
             returnValueForMissingStub: _i7.Future<_i2.ProductsModel>.value(
-              _FakeProductsModel_0(this, Invocation.method(#getProducts, [])),
+              _FakeProductsModel_0(
+                this,
+                Invocation.method(#getProducts, [], {
+                  #limit: limit,
+                  #skip: skip,
+                }),
+              ),
             ),
           )
           as _i7.Future<_i2.ProductsModel>);

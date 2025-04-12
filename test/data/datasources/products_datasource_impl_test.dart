@@ -3,10 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:products_app/core/http_client/dio_http_client_impl.dart';
 import 'package:products_app/core/http_client/http_client_interface.dart';
-import 'package:products_app/core/http_client/interceptors/interceptors.dart';
-import 'package:products_app/core/logger/logger.dart';
 import 'package:products_app/products/data/datasources/products_datasource.dart';
 import 'package:products_app/products/data/models/categories/categories_model.dart';
 import 'package:products_app/products/data/models/products/products_model.dart';

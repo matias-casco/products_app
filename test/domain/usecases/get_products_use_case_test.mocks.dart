@@ -47,21 +47,30 @@ class _FakeProducts_0 extends _i1.SmartFake implements _i2.Products {
 class MockProductsRepository extends _i1.Mock
     implements _i3.ProductsRepository {
   @override
-  _i4.Future<_i5.Either<_i6.Failure, _i2.Products>> getProducts() =>
+  _i4.Future<_i5.Either<_i6.Failure, _i2.Products>> getProducts({
+    int? limit = 24,
+    int? skip = 0,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#getProducts, []),
+            Invocation.method(#getProducts, [], {#limit: limit, #skip: skip}),
             returnValue:
                 _i4.Future<_i5.Either<_i6.Failure, _i2.Products>>.value(
                   _i7.dummyValue<_i5.Either<_i6.Failure, _i2.Products>>(
                     this,
-                    Invocation.method(#getProducts, []),
+                    Invocation.method(#getProducts, [], {
+                      #limit: limit,
+                      #skip: skip,
+                    }),
                   ),
                 ),
             returnValueForMissingStub:
                 _i4.Future<_i5.Either<_i6.Failure, _i2.Products>>.value(
                   _i7.dummyValue<_i5.Either<_i6.Failure, _i2.Products>>(
                     this,
-                    Invocation.method(#getProducts, []),
+                    Invocation.method(#getProducts, [], {
+                      #limit: limit,
+                      #skip: skip,
+                    }),
                   ),
                 ),
           )

@@ -314,14 +314,26 @@ class MockHttpClientInterface extends _i1.Mock
 class MockProductsDatasource extends _i1.Mock
     implements _i9.ProductsDatasource {
   @override
-  _i2.Future<_i3.ProductsModel> getProducts() =>
+  _i2.Future<_i3.ProductsModel> getProducts({int? limit = 24, int? skip = 0}) =>
       (super.noSuchMethod(
-            Invocation.method(#getProducts, []),
+            Invocation.method(#getProducts, [], {#limit: limit, #skip: skip}),
             returnValue: _i2.Future<_i3.ProductsModel>.value(
-              _FakeProductsModel_1(this, Invocation.method(#getProducts, [])),
+              _FakeProductsModel_1(
+                this,
+                Invocation.method(#getProducts, [], {
+                  #limit: limit,
+                  #skip: skip,
+                }),
+              ),
             ),
             returnValueForMissingStub: _i2.Future<_i3.ProductsModel>.value(
-              _FakeProductsModel_1(this, Invocation.method(#getProducts, [])),
+              _FakeProductsModel_1(
+                this,
+                Invocation.method(#getProducts, [], {
+                  #limit: limit,
+                  #skip: skip,
+                }),
+              ),
             ),
           )
           as _i2.Future<_i3.ProductsModel>);

@@ -16,9 +16,9 @@ class ProductsRepositoryImpl extends ProductsRepository {
       : _productsDatasource = productsDatasource;
 
   @override
-  Future<Either<Failure, Products>> getProducts() async {
+  Future<Either<Failure, Products>> getProducts({int limit = 24, int skip = 0}) async {
     try {
-      final products = await _productsDatasource.getProducts();
+      final products = await _productsDatasource.getProducts(limit: limit, skip: skip);
       return Right(
         products.toEntity(),
       );
